@@ -390,6 +390,7 @@ function ct(t, ic, extra){ return '<div class="card-title"><span class="ct-ico">
 function ph(title, desc, actions){ return '<div class="page-head"><div><div class="page-title">'+title+'</div><div class="page-desc">'+(desc||'')+'</div></div>'+(actions?'<div class="head-actions">'+actions+'</div>':'')+'</div>'; }
 function stat(ic, color, label, val){ return '<div class="stat-card"><div class="stat-ico '+color+'">'+icon(ic)+'</div><div><div class="stat-value">'+val+'</div><div class="stat-label">'+label+'</div></div></div>'; }
 function fmtMoney(n){ return '¥' + Number(n||0).toLocaleString('zh-CN'); }
+function fmtUSD(n){ return '$' + Number(n||0).toLocaleString('zh-CN'); }
 function pct(a,b){ return b===0 ? '0%' : Math.round(a/b*100)+'%'; }
 function today(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
@@ -774,7 +775,7 @@ async function viewAdminAlibaba(){
     return '<option value="'+k+'"'+(k===key?' selected':'')+'>'+mo.year+' 年 '+mo.month+' 月</option>';
   }).join('');
   const oRows = (d.byOwner||[]).map(function(o){
-    return '<tr><td><b>'+o.owner+'</b></td><td class="cell-mono">'+o.leads+'</td><td class="cell-mono">'+o.deals+'</td><td class="cell-mono">'+fmtMoney(o.amount)+'</td><td><b>'+o.conv+'%</b></td></tr>';
+    return '<tr><td><b>'+o.owner+'</b></td><td class="cell-mono">'+o.leads+'</td><td class="cell-mono">'+o.deals+'</td><td class="cell-mono">'+fmtUSD(o.amount)+'</td><td><b>'+o.conv+'%</b></td></tr>';
   }).join('') || '<tr><td colspan="5" class="empty-tip">暂无数据</tr></td>';
   const maxT = Math.max.apply(null, (d.byType||[]).map(function(x){return x.count;}).concat([1]));
   const typeBars = (d.byType||[]).map(function(x){
@@ -804,7 +805,7 @@ async function viewAdminAlibaba(){
   '<div class="stat-grid">' +
     stat('users','blue','商机总数',(noData?'—':t.leads+' 个')) +
     stat('trophy','green','成交单数',(noData?'—':t.deals+' 单')) +
-    stat('bag','gold','成交金额',(noData?'—':fmtMoney(t.amount))) +
+    stat('bag','gold','成交金额',(noData?'—':fmtUSD(t.amount))) +
     stat('target','purple','转化率',(noData?'—':t.conv+'%')) +
     stat('chart','cyan','投放花费',(t.spend>0?fmtMoney(t.spend):'—')) +
     stat('trend','red','单客成本',(t.costPerLead>0?'¥'+t.costPerLead:'—')) +
@@ -823,7 +824,7 @@ async function viewAdminAlibaba(){
   '<div class="card section-gap">'+ct('每日商机趋势','trend')+'<div class="vchart">'+vCols+'</div>' +
     '<div class="legend"><span class="lg"><span class="dot" style="background:var(--gold)"></span>每日商机数量</span></div></div>' +
   '<div class="card section-gap">'+ct('跟进情况 TOP8','clock')+followBars+'</div>' +
-  '<div class="info-note"><b>说明：</b>数据来自 7 月国际站商机统计表（116 条商机，已自动导入）。每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。</div>');
+  '<div class="info-note"><b>说明：</b>成交金额单位为 <b>USD</b>（美金）；数据来自 7 月国际站商机统计表（116 条商机，已自动导入）。每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。</div>');
 }
 async function viewAdminMall(){
   const [items, exchanges] = await Promise.all([api('/mall/items'), api('/mall/exchanges')]);
