@@ -270,7 +270,7 @@ tbody tr:hover td{background:#fafbfc}
       <div class="login-brand-name">安徽和和<small>ANHUI HEHE · OVERSEAS</small></div>
     </div>
     <div class="login-brand-mid">
-      <div class="login-brand-title">海外事业部<br><span class="accent">荣耀征途</span>积分平台</div>
+      <div class="login-brand-title">海外事业部<br><span class="accent">积分平台</span></div>
       <div class="login-brand-desc">以积分激励海外业务拓展，沉淀客户资产，透明排名，荣耀共享。业务员自助录入客户、申请积分，管理员统一审核发放。</div>
     </div>
     <div class="login-brand-foot">© 安徽和和 · 海外事业部 · 内部激励系统</div>
@@ -288,11 +288,11 @@ tbody tr:hover td{background:#fafbfc}
       <label class="login-label">密码</label>
       <input class="login-input" id="login-pass" type="password" placeholder="请输入密码">
       <button class="login-btn" onclick="doLogin()">登 录</button>
-      <div class="login-divider">演示账号 · 点击快速登录</div>
+      <div class="login-divider">演示账号 · 点击快速登录（密码 123456）</div>
       <div class="login-demo">
-        业务员：<span onclick="quickLogin('张明','sales')">张明</span> ·
-        <span onclick="quickLogin('李婷','sales')">李婷</span> ·
-        <span onclick="quickLogin('王浩','sales')">王浩</span><br>
+        业务员：<span onclick="quickLogin('Allen','sales')">Allen</span> ·
+        <span onclick="quickLogin('Kally','sales')">Kally</span> ·
+        <span onclick="quickLogin('Clarie','sales')">Clarie</span><br>
         管理员：<span onclick="quickLogin('管理员','admin')">管理员</span>
       </div>
     </div>
@@ -649,7 +649,7 @@ async function viewRules(){
     return '<div class="card">'+ct(g.cat, g.cat==='战果积分'?'trophy':(g.cat==='破冰积分'?'zap':(g.cat==='专业赋能'?'award':'alert')))+
       '<div class="table-wrap"><table class="rule-table"><thead><tr><th>积分项目</th><th>积分</th><th>说明</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
   }).join('');
-  return ph('积分规则','安徽和和海外事业部「荣耀征途」积分激励方案（试行）') + html +
+  return ph('积分规则','安徽和和海外事业部积分激励方案（试行）') + html +
   '<div class="card">'+ct('重要说明','alert')+
     '<div class="info-note"><b>① 积分获取：</b>所有积分一律通过「手动申请 → 管理员审核 → 发放」流程获得，无需上传凭证，办公室当面核对即可。<br>' +
     '<b>② 双账户：</b>累计积分（年度排名，只增不减）＋ 可用积分（商城抵扣，花了就减）。<br>' +
