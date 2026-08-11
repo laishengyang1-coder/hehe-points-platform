@@ -1,0 +1,15 @@
+[Unit]
+Description=Hehe Overseas Division Points Platform
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/points-platform
+ExecStart=/usr/bin/node server/index.js
+Restart=always
+RestartSec=3
+Environment=NODE_ENV=production
+Environment=PORT=3000
+
+[Install]
+WantedBy=multi-user.target

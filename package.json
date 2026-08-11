@@ -1,0 +1,17 @@
+{
+  "name": "hehe-points-platform",
+  "version": "1.0.0",
+  "description": "安徽和和海外事业部积分平台",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "seed": "node server/seed.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "express": "^4.19.2"
+  }
+}

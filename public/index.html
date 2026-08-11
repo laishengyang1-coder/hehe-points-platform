@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>安徽和和海外事业部积分平台</title>
+<style>
+:root{
+  --navy:#15233c; --navy-2:#1d2f4d; --navy-3:#27395c;
+  --blue:#2563eb; --blue-d:#1e40af; --blue-bg:#eaf1fe;
+  --gold:#a9801a; --gold-2:#c79720; --gold-bg:#f6efdd;
+  --ink:#1a2433; --ink-2:#5b6675; --ink-3:#8a93a3;
+  --bg:#f3f5f8; --card:#ffffff; --line:#e7eaf0; --line-2:#eef1f5;
+  --green:#15803d; --green-bg:#e8f4ec;
+  --red:#b91c1c; --red-bg:#fbecec;
+  --amber:#b45309; --amber-bg:#fbf1e0;
+  --cyan:#0e7490; --cyan-bg:#e3f4f7;
+  --purple:#6d28d9; --purple-bg:#f0ebfb;
+  --radius:8px; --radius-sm:6px;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05);
+  --shadow-md:0 4px 12px rgba(16,24,40,.08);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--ink);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hidden{display:none!important}
+a{text-decoration:none}
+.svg-ico{width:18px;height:18px;display:inline-block;vertical-align:middle;flex-shrink:0}
+.login-screen{display:flex;min-height:100vh;background:var(--bg)}
+.login-brand{flex:0 0 44%;max-width:520px;background:var(--navy);color:#fff;padding:56px 52px;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.login-brand::after{content:"";position:absolute;right:-120px;top:-120px;width:320px;height:320px;border:1px solid rgba(255,255,255,.06);border-radius:50%}
+.login-brand::before{content:"";position:absolute;right:-60px;bottom:-120px;width:260px;height:260px;border:1px solid rgba(255,255,255,.05);border-radius:50%}
+.login-brand-top{display:flex;align-items:center;gap:14px;z-index:1}
+.login-brand-mark{width:46px;height:46px;border-radius:10px;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#1a2433;font-weight:800;font-size:20px;flex-shrink:0}
+.login-brand-name{font-size:18px;font-weight:700;letter-spacing:.5px}
+.login-brand-name small{display:block;font-size:12px;font-weight:400;color:rgba(255,255,255,.5);margin-top:3px;letter-spacing:2px}
+.login-brand-mid{z-index:1}
+.login-brand-title{font-size:34px;font-weight:800;line-height:1.3;margin-bottom:16px}
+.login-brand-title .accent{color:var(--gold-2)}
+.login-brand-desc{font-size:14px;color:rgba(255,255,255,.55);line-height:1.9;max-width:360px}
+.login-brand-foot{font-size:12px;color:rgba(255,255,255,.35);z-index:1}
+.login-form-wrap{flex:1;display:flex;align-items:center;justify-content:center;padding:40px}
+.login-form-card{width:380px;max-width:100%}
+.login-form-kicker{font-size:13px;font-weight:600;color:var(--blue);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.login-form-title{font-size:24px;font-weight:800;color:var(--ink);margin-bottom:28px}
+.role-tabs{display:flex;gap:8px;margin-bottom:24px;background:var(--line-2);border-radius:var(--radius);padding:4px}
+.role-tab{flex:1;padding:11px;border-radius:var(--radius-sm);border:none;background:transparent;color:var(--ink-2);font-size:14px;cursor:pointer;transition:all .15s;font-weight:600}
+.role-tab.active{background:var(--navy);color:#fff;box-shadow:var(--shadow-sm)}
+.login-label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.login-input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:var(--radius);font-size:14px;outline:none;transition:border .15s,box-shadow .15s;background:#fff;color:var(--ink);font-family:inherit;margin-bottom:16px}
+.login-input:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.12)}
+.login-btn{width:100%;padding:13px;background:var(--navy);border:none;border-radius:var(--radius);color:#fff;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;letter-spacing:2px;margin-top:4px}
+.login-btn:hover{background:var(--navy-3)}
+.login-divider{display:flex;align-items:center;gap:12px;margin:24px 0;color:var(--ink-3);font-size:12px}
+.login-divider::before,.login-divider::after{content:"";flex:1;height:1px;background:var(--line)}
+.login-demo{font-size:13px;color:var(--ink-2);line-height:2}
+.login-demo span{color:var(--blue);cursor:pointer;font-weight:600}
+.login-demo span:hover{text-decoration:underline}
+.app{display:flex;min-height:100vh}
+.sidebar{width:236px;background:var(--navy);color:#fff;display:flex;flex-direction:column;position:fixed;height:100vh;z-index:50;flex-shrink:0}
+.sidebar-header{padding:18px 20px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:12px}
+.sidebar-mark{width:38px;height:38px;border-radius:9px;background:var(--gold);display:flex;align-items:center;justify-content:center;color:#1a2433;font-weight:800;font-size:17px;flex-shrink:0}
+.sidebar-logo-text{font-size:15px;font-weight:700;line-height:1.3}
+.sidebar-logo-text small{font-size:10px;font-weight:400;color:rgba(255,255,255,.45);display:block;margin-top:2px;letter-spacing:1px}
+.sidebar-nav{flex:1;padding:14px 12px;overflow-y:auto}
+.nav-group-label{font-size:11px;color:rgba(255,255,255,.32);font-weight:600;letter-spacing:1.5px;padding:18px 12px 8px}
+.nav-item{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s;color:rgba(255,255,255,.6);font-size:13.5px;font-weight:500;margin-bottom:2px;border-left:3px solid transparent}
+.nav-item:hover{background:var(--navy-2);color:#fff}
+.nav-item.active{background:var(--navy-2);color:#fff;border-left-color:var(--gold-2)}
+.nav-item .nav-ico{color:rgba(255,255,255,.5)}
+.nav-item.active .nav-ico{color:var(--gold-2)}
+.nav-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;padding:1px 7px;border-radius:10px;font-weight:700}
+.sidebar-footer{padding:12px 14px;border-top:1px solid rgba(255,255,255,.07)}
+.user-card{display:flex;align-items:center;gap:11px;padding:8px;border-radius:var(--radius-sm);cursor:pointer;transition:background .15s}
+.user-card:hover{background:var(--navy-2)}
+.user-avatar{width:34px;height:34px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0}
+.user-info{flex:1;min-width:0}
+.user-name{font-size:13px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.user-role{font-size:11px;color:rgba(255,255,255,.45)}
+.main{flex:1;margin-left:236px;padding:28px 34px;min-height:100vh;min-width:0}
+.page-head{border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:24px}
+.page-title{font-size:22px;font-weight:800;color:var(--ink);letter-spacing:.3px}
+.page-desc{font-size:13.5px;color:var(--ink-2);margin-top:5px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:22px;margin-bottom:18px}
+.card-title{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:18px;display:flex;align-items:center;gap:9px}
+.card-title .ct-ico{color:var(--navy-3);display:flex}
+.card-title .more{margin-left:auto;font-size:13px;color:var(--blue);cursor:pointer;font-weight:500}
+.card-title .more:hover{text-decoration:underline}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+@media(max-width:1200px){.grid-4{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:900px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr}}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;margin-bottom:24px}
+.stat-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:18px 20px;display:flex;align-items:center;gap:16px}
+.stat-ico{width:46px;height:46px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.stat-ico.gold{background:var(--gold-bg);color:var(--gold)}
+.stat-ico.green{background:var(--green-bg);color:var(--green)}
+.stat-ico.blue{background:var(--blue-bg);color:var(--blue)}
+.stat-ico.purple{background:var(--purple-bg);color:var(--purple)}
+.stat-ico.red{background:var(--red-bg);color:var(--red)}
+.stat-ico.amber{background:var(--amber-bg);color:var(--amber)}
+.stat-ico.cyan{background:var(--cyan-bg);color:var(--cyan)}
+.stat-value{font-size:25px;font-weight:800;color:var(--ink);line-height:1.1;letter-spacing:.5px}
+.stat-label{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.points-panel{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:var(--radius);padding:24px 28px;margin-bottom:24px;display:flex;gap:40px;flex-wrap:wrap;box-shadow:var(--shadow-sm)}
+.points-block{min-width:140px}
+.points-num{font-size:34px;font-weight:800;color:var(--gold);line-height:1;letter-spacing:.5px}
+.points-num.avail{color:var(--green)}
+.points-num.rank{color:var(--blue)}
+.points-cap{font-size:12.5px;color:var(--ink-2);margin-top:7px;font-weight:500}
+.points-divider{width:1px;background:var(--line);align-self:stretch}
+.points-note{flex:1;min-width:200px;display:flex;flex-direction:column;justify-content:center}
+.points-note-label{font-size:12.5px;color:var(--ink-2)}
+.points-note-val{font-size:20px;font-weight:800;color:var(--gold-2);margin:4px 0 8px}
+.bar{height:6px;background:var(--line-2);border-radius:3px;overflow:hidden;margin-top:6px}
+.bar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2));border-radius:3px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 18px;border-radius:var(--radius-sm);border:1px solid transparent;font-size:13.5px;font-weight:600;cursor:pointer;transition:all .15s;font-family:inherit}
+.btn-primary{background:var(--navy);color:#fff}
+.btn-primary:hover{background:var(--navy-3)}
+.btn-accent{background:var(--gold);color:#fff}
+.btn-accent:hover{background:var(--gold-2)}
+.btn-success{background:var(--green);color:#fff}
+.btn-success:hover{background:#166534}
+.btn-danger{background:var(--red);color:#fff}
+.btn-danger:hover{background:#991b1b}
+.btn-outline{background:#fff;border-color:var(--line);color:var(--ink)}
+.btn-outline:hover{border-color:var(--navy);color:var(--navy)}
+.btn-sm{padding:6px 14px;font-size:13px}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:5px;font-size:12px;font-weight:600;white-space:nowrap;line-height:1.6}
+.badge-success{background:var(--green-bg);color:var(--green)}
+.badge-warning{background:var(--amber-bg);color:var(--amber)}
+.badge-danger{background:var(--red-bg);color:var(--red)}
+.badge-info{background:var(--blue-bg);color:var(--blue-d)}
+.badge-purple{background:var(--purple-bg);color:var(--purple)}
+.badge-cyan{background:var(--cyan-bg);color:var(--cyan)}
+.badge-gray{background:#f1f3f6;color:var(--ink-2)}
+.badge-gold{background:var(--gold-bg);color:var(--gold)}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th{text-align:left;padding:12px 14px;border-bottom:2px solid var(--line);font-size:12px;color:var(--ink-2);font-weight:600;white-space:nowrap;letter-spacing:.3px}
+td{padding:13px 14px;border-bottom:1px solid var(--line-2);vertical-align:middle}
+tbody tr:hover td{background:#fafbfc}
+.form-label{display:block;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:6px}
+.form-input,.form-select,.form-textarea{width:100%;padding:10px 13px;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:14px;outline:none;transition:border .15s,box-shadow .15s;background:#fff;color:var(--ink);font-family:inherit}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(37,99,235,.1)}
+.form-textarea{resize:vertical;min-height:64px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:640px){.form-row{grid-template-columns:1fr}}
+.modal-overlay{position:fixed;inset:0;background:rgba(21,35,60,.45);display:flex;align-items:center;justify-content:center;z-index:200;padding:20px}
+.modal{background:#fff;border-radius:12px;width:480px;max-width:94vw;max-height:90vh;overflow-y:auto;padding:28px;box-shadow:0 20px 50px rgba(16,24,40,.25);position:relative}
+.modal-title{font-size:18px;font-weight:800;color:var(--ink);margin-bottom:22px;padding-right:30px}
+.modal-close{position:absolute;top:20px;right:24px;background:none;border:none;font-size:22px;cursor:pointer;color:var(--ink-3);line-height:1}
+.modal-close:hover{color:var(--ink)}
+.crm-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:16px}
+.crm-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:18px;transition:box-shadow .15s,border-color .15s}
+.crm-card:hover{box-shadow:var(--shadow-md);border-color:#d9dee7}
+.crm-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px}
+.crm-name{font-size:15.5px;font-weight:700;color:var(--ink)}
+.crm-geo{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+.crm-badges{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+.crm-detail{font-size:13px;color:var(--ink-2);line-height:1.85}
+.crm-detail b{color:var(--ink);font-weight:600}
+.mall-sec{margin-bottom:30px}
+.mall-sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.mall-sec-ico{width:38px;height:38px;border-radius:9px;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mall-sec-title{font-size:17px;font-weight:800;color:var(--ink)}
+.mall-sec-desc{font-size:12.5px;color:var(--ink-2)}
+.mall-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.mall-item{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:18px;transition:box-shadow .15s,border-color .15s}
+.mall-item:hover{box-shadow:var(--shadow-md);border-color:#d9dee7}
+.mall-item-ico{width:44px;height:44px;border-radius:10px;background:var(--gold-bg);color:var(--gold);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.mall-item-name{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:5px}
+.mall-item-desc{font-size:12.5px;color:var(--ink-2);margin-bottom:14px;min-height:34px}
+.mall-item-ft{display:flex;align-items:center;justify-content:space-between}
+.mall-item-pts{font-size:19px;font-weight:800;color:var(--gold)}
+.mall-item-pts small{font-size:12px;font-weight:500;color:var(--ink-2)}
+.mall-item.feature{border:1.5px solid var(--gold)}
+.lb-tabs{display:flex;gap:10px;margin-bottom:22px}
+.lb-tab{padding:9px 22px;border-radius:var(--radius-sm);border:1px solid var(--line);background:#fff;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink-2);transition:all .15s}
+.lb-tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.lb-row{display:flex;align-items:center;gap:16px;padding:15px 20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:9px;box-shadow:var(--shadow-sm)}
+.lb-rank{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;flex-shrink:0}
+.lb-rank-1{background:var(--gold);color:#fff}
+.lb-rank-2{background:#9aa3b2;color:#fff}
+.lb-rank-3{background:#b07e3a;color:#fff}
+.lb-rank-n{background:#f1f3f6;color:var(--ink-2)}
+.lb-name{flex:1;font-weight:700;font-size:14.5px;color:var(--ink)}
+.lb-sub{font-size:12.5px;color:var(--ink-2);font-weight:400;margin-top:2px}
+.lb-pts{font-size:19px;font-weight:800;color:var(--gold);letter-spacing:.5px}
+.act-list{padding:0}
+.act-item{display:flex;gap:13px;padding:13px 0;border-bottom:1px solid var(--line-2)}
+.act-item:last-child{border-bottom:none}
+.act-dot{width:9px;height:9px;border-radius:50%;margin-top:6px;flex-shrink:0}
+.act-dot.gold{background:var(--gold)} .act-dot.green{background:var(--green)}
+.act-dot.red{background:var(--red)} .act-dot.blue{background:var(--blue)} .act-dot.purple{background:var(--purple)}
+.act-body{flex:1;font-size:13.5px;line-height:1.6;color:var(--ink)}
+.act-time{font-size:12px;color:var(--ink-3);margin-top:3px}
+.review-item{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-sm);padding:18px 20px;margin-bottom:12px;display:flex;align-items:center;gap:16px}
+.review-ava{width:42px;height:42px;border-radius:50%;background:var(--navy);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;flex-shrink:0}
+.review-body{flex:1;min-width:0}
+.review-name{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:4px}
+.review-desc{font-size:13px;color:var(--ink-2);line-height:1.5}
+.review-pts{font-size:20px;font-weight:800;color:var(--gold);flex-shrink:0;letter-spacing:.5px}
+.review-actions{display:flex;gap:8px;flex-shrink:0}
+.qa-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.qa-btn{display:flex;align-items:center;gap:10px;padding:16px;border:1px solid var(--line);border-radius:var(--radius);background:#fff;cursor:pointer;transition:all .15s;font-size:14px;font-weight:600;color:var(--ink)}
+.qa-btn:hover{border-color:var(--navy);background:#fafbfc}
+.qa-btn .qa-ico{color:var(--navy)}
+.note-box{margin-top:16px;padding:14px 16px;background:var(--gold-bg);border-radius:var(--radius-sm);border-left:3px solid var(--gold);font-size:13px;color:var(--ink)}
+.note-box b{color:var(--gold)}
+.info-note{background:var(--blue-bg);border-radius:var(--radius-sm);padding:14px 16px;font-size:13.5px;color:var(--blue-d);line-height:1.7;border-left:3px solid var(--blue)}
+.info-note b{font-weight:700}
+#toast{position:fixed;top:22px;right:22px;background:var(--navy);color:#fff;padding:13px 22px;border-radius:var(--radius-sm);font-size:14px;font-weight:600;z-index:999;display:none;box-shadow:var(--shadow-md);border-left:3px solid var(--gold-2)}
+.menu-toggle{display:none}
+@media(max-width:860px){
+  .login-brand{display:none}
+  .sidebar{transform:translateX(-100%);transition:transform .25s;box-shadow:var(--shadow-md)}
+  .sidebar.open{transform:translateX(0)}
+  .main{margin-left:0;padding:18px}
+  .menu-toggle{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--navy);color:#fff;border-radius:var(--radius-sm);margin-bottom:18px;cursor:pointer;font-size:14px;font-weight:600}
+}
+/* ---- extra utility ---- */
+.page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.head-actions{display:flex;gap:10px;flex-shrink:0}
+.filter-bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+.filter-bar .form-select{width:auto;min-width:150px}
+.filter-bar .form-input{width:auto;min-width:210px}
+.empty-tip{padding:44px 20px;text-align:center;color:var(--ink-3);font-size:13.5px;background:#fff;border:1px dashed var(--line);border-radius:var(--radius)}
+.mini-stat{display:flex;flex-direction:column;gap:4px;padding:14px 16px;background:var(--line-2);border-radius:var(--radius-sm)}
+.mini-stat b{font-size:19px;color:var(--navy)}
+.mini-stat span{font-size:12px;color:var(--ink-2)}
+.footer-note{margin-top:26px;padding:14px 16px;background:#f8f9fb;border:1px solid var(--line);border-radius:var(--radius-sm);font-size:12.5px;color:var(--ink-3);line-height:1.9}
+.lb-row.me{border-color:var(--gold);background:var(--gold-bg)}
+.lb-me-badge{margin-left:auto;font-size:11px;color:var(--gold);font-weight:700;letter-spacing:.5px}
+.pos{color:var(--green);font-weight:700}
+.neg{color:var(--red);font-weight:700}
+.rev-tabs{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.rev-tab{padding:8px 18px;border-radius:var(--radius-sm);border:1px solid var(--line);background:#fff;font-size:13px;font-weight:600;cursor:pointer;color:var(--ink-2);transition:all .15s}
+.rev-tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
+.pts-num{font-weight:800;font-size:15px}
+.section-gap{margin-top:26px}
+.small-ava{width:30px;height:30px;border-radius:50%;background:var(--navy-3);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.cell-mono{font-variant-numeric:tabular-nums}
+.rule-table td:first-child{font-weight:600;color:var(--ink)}
+.rule-table td:nth-child(2){color:var(--gold);font-weight:700;white-space:nowrap}
+</style>
+</head>
+<body>
+<!-- ============ LOGIN ============ -->
+<div id="login" class="login-screen">
+  <div class="login-brand">
+    <div class="login-brand-top">
+      <div class="login-brand-mark">和</div>
+      <div class="login-brand-name">安徽和和<small>ANHUI HEHE · OVERSEAS</small></div>
+    </div>
+    <div class="login-brand-mid">
+      <div class="login-brand-title">海外事业部<br><span class="accent">荣耀征途</span>积分平台</div>
+      <div class="login-brand-desc">以积分激励海外业务拓展，沉淀客户资产，透明排名，荣耀共享。业务员自助录入客户、申请积分，管理员统一审核发放。</div>
+    </div>
+    <div class="login-brand-foot">© 安徽和和 · 海外事业部 · 内部激励系统</div>
+  </div>
+  <div class="login-form-wrap">
+    <div class="login-form-card">
+      <div class="login-form-kicker">OVERSEAS DIVISION</div>
+      <div class="login-form-title">登录积分平台</div>
+      <div class="role-tabs">
+        <button class="role-tab active" id="tab-sales" onclick="setRole('sales')">业务员</button>
+        <button class="role-tab" id="tab-admin" onclick="setRole('admin')">管理员</button>
+      </div>
+      <label class="login-label">账号</label>
+      <input class="login-input" id="login-user" placeholder="工号或姓名">
+      <label class="login-label">密码</label>
+      <input class="login-input" id="login-pass" type="password" placeholder="请输入密码">
+      <button class="login-btn" onclick="doLogin()">登 录</button>
+      <div class="login-divider">演示账号 · 点击快速登录</div>
+      <div class="login-demo">
+        业务员：<span onclick="quickLogin('张明','sales')">张明</span> ·
+        <span onclick="quickLogin('李婷','sales')">李婷</span> ·
+        <span onclick="quickLogin('王浩','sales')">王浩</span><br>
+        管理员：<span onclick="quickLogin('管理员','admin')">管理员</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ APP SHELL ============ -->
+<div id="app" class="app hidden">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-mark">和</div>
+      <div class="sidebar-logo-text">安徽和和<small>海外事业部积分平台</small></div>
+    </div>
+    <nav id="sidebar-nav" class="sidebar-nav"></nav>
+    <div class="sidebar-footer" id="sidebar-footer"></div>
+  </aside>
+  <main class="main">
+    <div class="menu-toggle" onclick="toggleMenu()">
+      <svg class="svg-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      菜单
+    </div>
+    <div id="view"></div>
+  </main>
+</div>
+
+<!-- ============ MODAL / TOAST ============ -->
+<div id="modal-root"></div>
+<div id="toast"></div>
+<script>/* ================= API 封装 ================= */
+let TOKEN = localStorage.getItem('pp_token') || '';
+async function api(path, method, body){
+  const opt = { method: method || 'GET', headers: {} };
+  if(TOKEN) opt.headers['Authorization'] = 'Bearer ' + TOKEN;
+  if(body !== undefined){ opt.headers['Content-Type'] = 'application/json'; opt.body = JSON.stringify(body); }
+  const res = await fetch('/api' + path, opt);
+  const data = await res.json().catch(function(){ return {}; });
+  if(res.status === 401 && path.indexOf('/login') !== 0){
+    logout(); throw new Error('登录已过期，请重新登录');
+  }
+  if(!res.ok) throw new Error(data.error || '请求失败');
+  return data;
+}
+
+/* ================= 状态 ================= */
+const state = { user:null, role:'sales', view:'dashboard', lbTab:'year', revFilter:'pending', crmFilter:'all', crmQ:'', aliYear: String(new Date().getFullYear()) };
+let CACHE = {}; // 客户/流水/商城/榜单等数据缓存，交互后失效重拉
+
+function me(){ return state.user; }
+function userName(id){ const u = (CACHE.users||[]).find(function(x){ return x.id===id; }); return u ? u.name : (me() && me().id===id ? me().name : '—'); }
+function userRegion(id){ const u = (CACHE.users||[]).find(function(x){ return x.id===id; }); return u ? u.region : (me() && me().id===id ? (me().region||'') : ''); }
+
+/* ================= 图标 ================= */
+const ICONS = {
+  dashboard:'<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
+  users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  award:'<circle cx="12" cy="8" r="7"/><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/>',
+  bag:'<path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/>',
+  trophy:'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"/>',
+  doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/>',
+  check:'<polyline points="20 6 9 17 4 12"/>',
+  chart:'<line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/>',
+  user:'<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+  plus:'<line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>',
+  minus:'<line x1="5" y1="12" x2="19" y2="12"/>',
+  search:'<circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>',
+  x:'<line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>',
+  star:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
+  pin:'<path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>',
+  phone:'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  mail:'<path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  edit:'<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/>',
+  trash:'<polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  alert:'<path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  gift:'<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
+  clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  trend:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>',
+  down:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>',
+  out:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>',
+  menu:'<line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/>',
+  filter:'<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>',
+  cal:'<rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  pie:'<path d="M21.21 15.89A10 10 0 1 1 8 2.83"/><path d="M22 12A10 10 0 0 0 12 2v10z"/>',
+  target:'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  zap:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  brief:'<rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>',
+  globe:'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>'
+};
+function icon(n, s){ s = s || 18; return '<svg class="svg-ico" width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (ICONS[n] || '') + '</svg>'; }
+
+/* ================= 通用 UI ================= */
+function statusBadge(s){ var map={'首次接触':'info','跟进中':'warning','已寄样':'purple','已成交':'success','流失':'danger'}; return '<span class="badge badge-'+(map[s]||'gray')+'">'+s+'</span>'; }
+function rateBadge(r){ var map={S:'gold',A:'blue',B:'gray',C:'cyan'}; return '<span class="badge badge-'+(map[r]||'gray')+'">'+r+' 级客户</span>'; }
+function logBadge(s){ var map={pending:'warning',approved:'success',rejected:'danger'}; var txt={pending:'待审核',approved:'已发放',rejected:'已驳回'}; return '<span class="badge badge-'+(map[s]||'gray')+'">'+(txt[s]||s)+'</span>'; }
+function ct(t, ic, extra){ return '<div class="card-title"><span class="ct-ico">'+icon(ic)+'</span>'+t+(extra||'')+'</div>'; }
+function ph(title, desc, actions){ return '<div class="page-head"><div><div class="page-title">'+title+'</div><div class="page-desc">'+(desc||'')+'</div></div>'+(actions?'<div class="head-actions">'+actions+'</div>':'')+'</div>'; }
+function stat(ic, color, label, val){ return '<div class="stat-card"><div class="stat-ico '+color+'">'+icon(ic)+'</div><div><div class="stat-value">'+val+'</div><div class="stat-label">'+label+'</div></div></div>'; }
+function fmtMoney(n){ return '¥' + Number(n||0).toLocaleString('zh-CN'); }
+function pct(a,b){ return b===0 ? '0%' : Math.round(a/b*100)+'%'; }
+function today(){ var d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+
+function openModal(html){ document.getElementById('modal-root').innerHTML = '<div class="modal-overlay" onclick="if(event.target===this)closeModal()"><div class="modal">'+html+'</div></div>'; }
+function closeModal(){ document.getElementById('modal-root').innerHTML = ''; }
+function toast(msg){ var t=document.getElementById('toast'); t.innerHTML=msg; t.style.display='block'; clearTimeout(t._t); t._t=setTimeout(function(){ t.style.display='none'; },2600); }
+function modalHead(title){ return '<div class="modal-title">'+title+'</div><button class="modal-close" onclick="closeModal()">×</button>'; }
+function toggleMenu(){ document.querySelector('.sidebar').classList.toggle('open'); }
+
+/* ================= 导航 ================= */
+const NAV = {
+  sales: [
+    {group:'工作台', items:[{id:'dashboard',label:'工作台',icon:'dashboard'},{id:'crm',label:'客户管理',icon:'users'},{id:'points',label:'我的积分',icon:'award'}]},
+    {group:'激励', items:[{id:'mall',label:'积分商城',icon:'bag'},{id:'leaderboard',label:'荣耀榜单',icon:'trophy'},{id:'rules',label:'积分规则',icon:'doc'}]}
+  ],
+  admin: [
+    {group:'总览', items:[{id:'admin-dashboard',label:'数据总览',icon:'dashboard'},{id:'admin-review',label:'积分审核',icon:'check',badge:true},{id:'admin-crm',label:'客户管理',icon:'users'}]},
+    {group:'运营', items:[{id:'admin-alibaba',label:'国际站看板',icon:'chart'},{id:'admin-mall',label:'商城管理',icon:'bag'},{id:'admin-users',label:'人员管理',icon:'user'}]}
+  ]
+};
+function pendCount(){
+  if(!CACHE.logs || !CACHE.exchanges) return 0;
+  return CACHE.logs.filter(function(l){ return l.status==='pending'; }).length + CACHE.exchanges.filter(function(e){ return e.status==='pending'; }).length;
+}
+function renderSidebar(){
+  const nav = NAV[state.role];
+  const u = me();
+  let html = '';
+  nav.forEach(function(g){
+    html += '<div class="nav-group-label">'+g.group+'</div>';
+    html += g.items.map(function(it){
+      const badge = (it.badge && pendCount()>0) ? '<span class="nav-badge">'+pendCount()+'</span>' : '';
+      return '<div class="nav-item'+(state.view===it.id?' active':'')+'" onclick="go(\''+it.id+'\')"><span class="nav-ico">'+icon(it.icon)+'</span>'+it.label+badge+'</div>';
+    }).join('');
+  });
+  document.getElementById('sidebar-nav').innerHTML = html;
+  document.getElementById('sidebar-footer').innerHTML =
+    '<div class="user-card" onclick="logout()" title="退出登录">' +
+    '<div class="user-avatar">'+u.name.slice(0,1)+'</div>' +
+    '<div class="user-info"><div class="user-name">'+u.name+'</div><div class="user-role">'+(u.role==='admin'?'系统管理员':(u.region||'业务员'))+'</div></div>' +
+    '<span style="color:rgba(255,255,255,.4)">'+icon('out',16)+'</span></div>';
+}
+function go(v){
+  state.view = v;
+  document.querySelector('.sidebar').classList.remove('open');
+  render();
+}
+async function render(){
+  renderSidebar();
+  const views = state.role==='admin' ? ADMIN_VIEWS : SALES_VIEWS;
+  const fn = views[state.view];
+  const viewEl = document.getElementById('view');
+  viewEl.innerHTML = '<div class="empty-tip">加载中…</div>';
+  try { viewEl.innerHTML = await fn(); }
+  catch(e){ viewEl.innerHTML = '<div class="empty-tip">加载失败：'+e.message+'</div>'; }
+}
+
+/* ================= 登录 / 退出 ================= */
+function setRole(r){ state.role=r; document.getElementById('tab-sales').className='role-tab'+(r==='sales'?' active':''); document.getElementById('tab-admin').className='role-tab'+(r==='admin'?' active':''); }
+async function doLogin(){
+  const name = document.getElementById('login-user').value.trim();
+  const password = document.getElementById('login-pass').value;
+  if(!name || !password){ toast('请输入账号和密码'); return; }
+  try {
+    const d = await api('/login','POST',{name:name, password:password});
+    TOKEN = d.token;
+    localStorage.setItem('pp_token', TOKEN);
+    state.user = d.user;
+    state.role = d.user.role;
+    state.view = d.user.role==='admin' ? 'admin-dashboard' : 'dashboard';
+    enterApp();
+  } catch(e){ toast(e.message); }
+}
+async function quickLogin(name, role){
+  const password = role==='admin' ? 'admin123' : '123456';
+  try {
+    const d = await api('/login','POST',{name:name, password:password});
+    TOKEN = d.token;
+    localStorage.setItem('pp_token', TOKEN);
+    state.user = d.user;
+    state.role = d.user.role;
+    state.view = d.user.role==='admin' ? 'admin-dashboard' : 'dashboard';
+    enterApp();
+  } catch(e){ toast('演示账号登录失败：'+e.message); }
+}
+function enterApp(){
+  document.getElementById('login').classList.add('hidden');
+  document.getElementById('app').classList.remove('hidden');
+  render();
+  toast('欢迎回来，'+me().name);
+}
+function logout(){
+  if(TOKEN){ api('/logout','POST').catch(function(){}); }
+  TOKEN=''; localStorage.removeItem('pp_token');
+  state.user=null;
+  document.getElementById('app').classList.add('hidden');
+  document.getElementById('login').classList.remove('hidden');
+  document.getElementById('login-pass').value='';
+}
+
+/* ================= 业务员视图 ================= */
+function crmCard(c){
+  return '<div class="crm-card">' +
+    '<div class="crm-head">' +
+      '<div><div class="crm-name">'+c.name+'</div><div class="crm-geo">'+icon('pin',14)+' '+c.country+' · '+(userName(c.owner_id))+'</div></div>' +
+      '<button class="btn btn-outline btn-sm" onclick="openEditCustomer('+c.id+')">'+icon('edit',14)+'</button>' +
+    '</div>' +
+    '<div class="crm-badges">'+rateBadge(c.rating)+statusBadge(c.status)+'</div>' +
+    '<div class="crm-detail"><b>联系人：</b>'+c.contact+'<br><b>电话：</b>'+c.phone+(c.note?'<br><b>备注：</b>'+c.note:'')+'</div>' +
+  '</div>';
+}
+async function viewDashboard(){
+  const u = me();
+  const [bal, customers, logs, lb] = await Promise.all([
+    api('/me/balance'), api('/customers'), api('/logs'), api('/leaderboard?tab=year')
+  ]);
+  CACHE.logs = logs;
+  const myCusts = customers;
+  const deals = myCusts.filter(function(c){ return c.status==='已成交'; }).length;
+  const pend = logs.filter(function(l){ return l.status==='pending'; });
+  const pendPts = pend.reduce(function(s,l){ return s+l.pts; },0);
+  const mon = today().slice(0,7);
+  const monthEarn = logs.filter(function(l){ return l.status==='approved' && l.kind==='earn' && (l.date||'').indexOf(mon)===0; }).reduce(function(s,l){ return s+l.pts; },0);
+  const recent = logs.slice(0,6);
+  const actHtml = recent.length ? recent.map(function(l){
+    const dot = l.kind==='spend' ? 'red' : (l.status==='pending' ? 'blue' : 'gold');
+    return '<div class="act-item"><span class="act-dot '+dot+'"></span><div class="act-body">'+l.type+' <b>'+(l.pts>0?'+':'')+l.pts+'分</b>'+(l.related?'（'+l.related+'）':'')+'<div class="act-time">'+l.date+' · '+logBadge(l.status)+'</div></div></div>';
+  }).join('') : '<div class="empty-tip">暂无积分动态</div>';
+  return ph('工作台','欢迎回来，'+u.name+' · '+(u.region||'')+' · 今日积分动态一览') +
+  '<div class="points-panel">' +
+    '<div class="points-block"><div class="points-num">'+bal.cum+'</div><div class="points-cap">累计积分 · 年度排名用</div></div>' +
+    '<div class="points-divider"></div>' +
+    '<div class="points-block"><div class="points-num avail">'+bal.avail+'</div><div class="points-cap">可用积分 · 商城抵扣用</div></div>' +
+    '<div class="points-divider"></div>' +
+    '<div class="points-block"><div class="points-num rank">第 '+bal.rank+' 名</div><div class="points-cap">当前年度总榜排名</div></div>' +
+    '<div class="points-note"><div class="points-note-label">本月已获积分</div><div class="points-note-val">+'+monthEarn+'</div>' +
+    '<div class="bar"><div class="bar-fill" style="width:'+Math.min(100,monthEarn*2.5)+'%"></div></div></div>' +
+  '</div>' +
+  '<div class="stat-grid">' +
+    stat('users','blue','我的客户',myCusts.length) + stat('brief','green','已成交客户',deals) +
+    stat('clock','amber','待审核申请',pend.length+' 条') + stat('zap','gold','本月积分','+'+monthEarn) +
+  '</div>' +
+  '<div class="grid-2">' +
+    '<div class="card">'+ct('快捷操作','zap')+
+      '<div class="qa-grid">' +
+        '<button class="qa-btn" onclick="openApplyPoints()"><span class="qa-ico">'+icon('award')+'</span>申请积分</button>' +
+        '<button class="qa-btn" onclick="openAddCustomer()"><span class="qa-ico">'+icon('plus')+'</span>录入客户</button>' +
+        '<button class="qa-btn" onclick="go(\'mall\')"><span class="qa-ico">'+icon('bag')+'</span>积分商城</button>' +
+        '<button class="qa-btn" onclick="go(\'leaderboard\')"><span class="qa-ico">'+icon('trophy')+'</span>荣耀榜单</button>' +
+      '</div>' +
+      '<div class="note-box"><b>提示：</b>所有积分申请需管理员审核通过后发放，每年 1 月 1 日积分清零重新累积。</div>' +
+    '</div>' +
+    '<div class="card">'+ct('最近动态','clock')+'<div class="act-list">'+actHtml+'</div></div>' +
+  '</div>';
+}
+function salesCrmHtml(list){
+  return list.length ? list.map(crmCard).join('') : '<div class="empty-tip">暂无客户，点击右上角「录入客户」开始沉淀客户资产</div>';
+}
+async function viewCRM(){
+  const list = await api('/customers');
+  CACHE.customers = list;
+  let rows = list;
+  if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
+  const opts = ['all','首次接触','跟进中','已寄样','已成交','流失'].map(function(s){
+    return '<option value="'+s+'"'+(state.crmFilter===s?' selected':'')+'>'+(s==='all'?'全部状态':s)+'</option>';
+  }).join('');
+  return ph('客户管理','维护你的客户档案，状态与评级透明可见，成交后可申请积分',
+    '<button class="btn btn-primary" onclick="openAddCustomer()">'+icon('plus',15)+'录入客户</button>') +
+  '<div class="filter-bar">' +
+    '<select class="form-select" onchange="state.crmFilter=this.value;refreshCrm()">'+opts+'</select>' +
+    '<input class="form-input" placeholder="搜索客户 / 国家 / 联系人" value="'+(state.crmQ||'')+'" oninput="state.crmQ=this.value;refreshCrm()">' +
+  '</div>' +
+  '<div class="crm-grid" id="crm-grid">'+salesCrmHtml(rows)+'</div>';
+}
+function refreshCrm(){
+  const list = CACHE.customers || [];
+  let rows = list;
+  if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
+  document.getElementById('crm-grid').innerHTML = salesCrmHtml(rows);
+}
+async function viewPoints(){
+  const [bal, logs] = await Promise.all([api('/me/balance'), api('/logs')]);
+  CACHE.logs = logs;
+  const rows = logs.length ? logs.map(function(l){
+    const cls = l.pts>=0 ? 'pos' : 'neg';
+    return '<tr><td class="cell-mono">'+l.date+'</td><td>'+l.type+'<div style="font-size:12px;color:var(--ink-3)">'+l.cat+(l.related?' · '+l.related:'')+'</div></td><td>'+(l.desc||'—')+'</td><td class="'+cls+'">'+(l.pts>0?'+':'')+l.pts+'</td><td>'+logBadge(l.status)+'</td></tr>';
+  }).join('') : '<tr><td colspan="5" class="empty-tip">暂无积分流水</td></tr>';
+  return ph('我的积分','积分流水 · 累计积分用于年度排名，可用积分用于商城兑换',
+    '<button class="btn btn-primary" onclick="openApplyPoints()">'+icon('plus',15)+'申请积分</button>') +
+  '<div class="points-panel">' +
+    '<div class="points-block"><div class="points-num">'+bal.cum+'</div><div class="points-cap">累计积分</div></div>' +
+    '<div class="points-divider"></div>' +
+    '<div class="points-block"><div class="points-num avail">'+bal.avail+'</div><div class="points-cap">可用积分</div></div>' +
+    '<div class="points-divider"></div>' +
+    '<div class="points-block"><div class="points-num rank">第 '+bal.rank+' 名</div><div class="points-cap">年度排名</div></div>' +
+  '</div>' +
+  '<div class="card">'+ct('积分流水','clock')+
+    '<div class="table-wrap"><table><thead><tr><th>日期</th><th>类型 / 类目</th><th>说明</th><th>积分</th><th>状态</th></tr></thead><tbody>'+rows+'</tbody></table></div>' +
+  '</div>';
+}
+function mallItem(it, avail){
+  const can = avail >= it.pts;
+  return '<div class="mall-item'+(it.pts>=2000?' feature':'')+'">' +
+    '<div class="mall-item-ico">'+icon(it.ico||'gift',22)+'</div>' +
+    '<div class="mall-item-name">'+it.name+'</div>' +
+    '<div class="mall-item-desc">'+it.desc+'</div>' +
+    '<div class="mall-item-ft"><div class="mall-item-pts">'+it.pts+'<small> 分</small></div>' +
+    '<button class="btn '+(can?'btn-accent btn-sm':'btn-outline btn-sm')+'" onclick="openExchange('+it.id+')">'+(can?'立即兑换':'积分不足')+'</button></div>' +
+  '</div>';
+}
+async function viewMall(){
+  const [items, bal] = await Promise.all([api('/mall/items'), api('/me/balance')]);
+  CACHE.mall = items;
+  const sec = [
+    {key:'instant', title:'即时兑换', desc:'积分充足随时兑换，管理员审核后发放', ico:'zap'},
+    {key:'quarterly', title:'季度心愿单', desc:'每季度集中采购，攒分兑换心仪好物', ico:'cal'},
+    {key:'annual', title:'年度竞拍', desc:'年末重磅竞拍，积分越高机会越大', ico:'trophy'}
+  ];
+  const html = sec.map(function(s){
+    const list = items[s.key] || [];
+    return '<div class="mall-sec"><div class="mall-sec-head"><div class="mall-sec-ico">'+icon(s.ico)+'</div><div><div class="mall-sec-title">'+s.title+'</div><div class="mall-sec-desc">'+s.desc+'</div></div></div>' +
+      '<div class="mall-grid">'+list.map(function(it){ return mallItem(it, bal.avail); }).join('')+'</div></div>';
+  }).join('');
+  return ph('积分商城','可用积分余额：'+bal.avail+' 分 · 兑换需管理员审核后发放') +
+  '<div class="info-note"><b>兑换流程：</b>提交兑换申请 → 管理员审核 → 发放奖品 → 扣除可用积分。可用积分不足将无法兑换。</div>' +
+  '<div class="section-gap">'+html+'</div>';
+}
+function lbRow(r, isMe){
+  const rankCls = r.rank===1?'lb-rank-1':(r.rank===2?'lb-rank-2':(r.rank===3?'lb-rank-3':'lb-rank-n'));
+  return '<div class="lb-row'+(isMe?' me':'')+'">' +
+    '<div class="lb-rank '+rankCls+'">'+r.rank+'</div>' +
+    '<div class="lb-name">'+r.name+(isMe?'<span class="lb-me-badge">我</span>':'')+
+      '<div class="lb-sub">'+(r.region||'')+' · 入职 '+(r.joined||'—')+'</div></div>' +
+    '<div class="lb-pts">'+r.cum+'<small style="font-size:12px;color:var(--ink-2);font-weight:500"> 分</small></div>' +
+  '</div>';
+}
+async function viewLeaderboard(){
+  const u = me();
+  const d = await api('/leaderboard?tab='+state.lbTab);
+  const html = d.rows.map(function(r){ return lbRow(r, r.id===u.id); }).join('');
+  return ph('荣耀榜单','按累计积分排名 · 积分每年 1 月 1 日清零后重新累积') +
+  '<div class="lb-tabs">' +
+    '<button class="lb-tab'+(state.lbTab==='month'?' active':'')+'" onclick="state.lbTab=\'month\';render()">月度榜</button>' +
+    '<button class="lb-tab'+(state.lbTab==='year'?' active':'')+'" onclick="state.lbTab=\'year\';render()">年度总榜</button>' +
+  '</div>'+html+
+  '<div class="footer-note">榜单使用「累计积分」排名，与商城可用余额无关；所有业务员信息全员可见。</div>';
+}
+async function viewRules(){
+  const types = await api('/types');
+  const html = types.map(function(g){
+    const rows = g.items.map(function(it){
+      return '<tr><td>'+it.t+'</td><td>'+(it.p>0?'+':'')+it.p+' 分</td><td>'+it.d+'</td></tr>';
+    }).join('');
+    return '<div class="card">'+ct(g.cat, g.cat==='战果积分'?'trophy':(g.cat==='破冰积分'?'zap':(g.cat==='专业赋能'?'award':'alert')))+
+      '<div class="table-wrap"><table class="rule-table"><thead><tr><th>积分项目</th><th>积分</th><th>说明</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>';
+  }).join('');
+  return ph('积分规则','安徽和和海外事业部「荣耀征途」积分激励方案（试行）') + html +
+  '<div class="card">'+ct('重要说明','alert')+
+    '<div class="info-note"><b>① 积分获取：</b>所有积分一律通过「手动申请 → 管理员审核 → 发放」流程获得，无需上传凭证，办公室当面核对即可。<br>' +
+    '<b>② 双账户：</b>累计积分（年度排名，只增不减）＋ 可用积分（商城抵扣，花了就减）。<br>' +
+    '<b>③ 清零规则：</b>每年 1 月 1 日全部归零，新年重新累积。<br>' +
+    '<b>④ 商城兑换：</b>即时兑换 / 季度心愿单 / 年度竞拍，兑换同样需要管理员审核。<br>' +
+    '<b>⑤ 荣誉衔接：</b>获评季度优秀员工 / 进步之星 +20 分；年度积分总冠军授予「海外尖兵」称号，姓名 / 照片上总部荣誉墙，连续两年冠军优先纳入股权激励对象。<br>' +
+    '<b>⑥ 预算与有效期：</b>从事业部年度净利润中划拨 5% 作为积分激励预算，年度兑换总价值严格控制在预算内；积分有效期 12 个月，到期未使用清零。</div>' +
+  '</div>';
+}
+
+/* ================= 管理员视图 ================= */
+async function viewAdminDash(){
+  const [users, logs, exchanges] = await Promise.all([
+    api('/users'), api('/logs?status=all'), api('/mall/exchanges')
+  ]);
+  CACHE.users = users; CACHE.logs = logs; CACHE.exchanges = exchanges;
+  const sales = users.filter(function(u){ return u.role!=='admin'; });
+  const pend = logs.filter(function(l){ return l.status==='pending'; });
+  const pendPts = pend.reduce(function(s,l){ return s+l.pts; },0);
+  const yearEarn = logs.filter(function(l){ return l.status==='approved' && l.kind==='earn'; }).reduce(function(s,l){ return s+l.pts; },0);
+  const totalCust = (CACHE.customers || await api('/customers')).length;
+  const pendEx = exchanges.filter(function(e){ return e.status==='pending'; });
+  const pendHtml = pend.slice(0,5).map(function(l){
+    return '<div class="review-item"><div class="review-ava">'+userName(l.user_id).slice(0,1)+'</div>' +
+      '<div class="review-body"><div class="review-name">'+userName(l.user_id)+' · '+l.type+'</div>' +
+      '<div class="review-desc">'+(l.desc||'')+(l.related?'（'+l.related+'）':'')+' · '+l.date+'</div></div>' +
+      '<div class="review-pts">+'+(l.pts<0?0:l.pts)+'</div>' +
+      '<div class="review-actions">' +
+        '<button class="btn btn-success btn-sm" onclick="approveLog('+l.id+')">'+icon('check',14)+'通过</button>' +
+        '<button class="btn btn-danger btn-sm" onclick="rejectLog('+l.id+')">'+icon('x',14)+'驳回</button>' +
+      '</div></div>';
+  }).join('') || '<div class="empty-tip">暂无待审核申请</div>';
+  const lbRows = sales.map(function(x){ return lbRow({rank:x.rank,name:x.name,region:x.region,joined:x.joined,cum:x.cum}, false); }).join('');
+  return ph('数据总览','全平台运营数据一览') +
+  '<div class="stat-grid">' +
+    stat('users','blue','业务员',sales.length) + stat('brief','green','客户总数',totalCust) +
+    stat('trophy','gold','待审核积分',pend.length+' 条') + stat('clock','amber','待兑换',pendEx.length) +
+    stat('award','purple','年度累计发放',yearEarn+' 分') + stat('bag','cyan','业务员总数',sales.length) +
+  '</div>' +
+  '<div class="grid-2">' +
+    '<div class="card">'+ct('待审核积分申请','check','<span class="more" onclick="go(\'admin-review\')">查看全部 →</span>')+pendHtml+'</div>' +
+    '<div class="card">'+ct('年度排行榜','trophy')+lbRows+'</div>' +
+  '</div>';
+}
+async function viewAdminReview(){
+  const [logs, exchanges] = await Promise.all([
+    api('/logs?status='+state.revFilter), api('/mall/exchanges')
+  ]);
+  CACHE.logs = logs; CACHE.exchanges = exchanges;
+  const list = logs;
+  const html = list.map(function(l){
+    let actions = '<span class="badge badge-gray">已处理</span>';
+    if(l.status==='pending'){
+      actions = '<button class="btn btn-success btn-sm" onclick="approveLog('+l.id+')">'+icon('check',14)+'通过</button>' +
+                '<button class="btn btn-danger btn-sm" onclick="rejectLog('+l.id+')">'+icon('x',14)+'驳回</button>';
+    }
+    return '<div class="review-item"><div class="review-ava">'+userName(l.user_id).slice(0,1)+'</div>' +
+      '<div class="review-body"><div class="review-name">'+userName(l.user_id)+' · '+l.type+' <span class="badge badge-gray" style="margin-left:6px">'+l.cat+'</span></div>' +
+      '<div class="review-desc">'+(l.desc||'—')+(l.related?'（'+l.related+'）':'')+' · 申请日期 '+l.date+'</div></div>' +
+      '<div class="review-pts">'+(l.pts>0?'+':'')+l.pts+'</div>' +
+      '<div class="review-actions">'+actions+'</div></div>';
+  }).join('') || '<div class="empty-tip">该分类下暂无记录</div>';
+  const tabs = ['pending','approved','rejected','all'].map(function(t){
+    const txt = {pending:'待审核',approved:'已发放',rejected:'已驳回',all:'全部'};
+    return '<button class="rev-tab'+(state.revFilter===t?' active':'')+'" onclick="state.revFilter=\''+t+'\';render()">'+txt[t]+'</button>';
+  }).join('');
+  const exHtml = exchanges.filter(function(e){ return e.status==='pending'; }).map(function(e){
+    return '<div class="review-item"><div class="review-ava">'+userName(e.user_id).slice(0,1)+'</div>' +
+      '<div class="review-body"><div class="review-name">'+userName(e.user_id)+' · 商城兑换 '+e.item+'</div>' +
+      '<div class="review-desc">兑换申请 · '+e.date+'</div></div>' +
+      '<div class="review-pts">-'+e.cost+'</div>' +
+      '<div class="review-actions">' +
+        '<button class="btn btn-success btn-sm" onclick="approveEx('+e.id+')">'+icon('check',14)+'通过发放</button>' +
+        '<button class="btn btn-danger btn-sm" onclick="rejectEx('+e.id+')">'+icon('x',14)+'驳回</button>' +
+      '</div></div>';
+  }).join('') || '<div class="empty-tip">暂无待处理兑换</div>';
+  return ph('积分审核','审核积分申请与商城兑换，通过后积分实时到账') +
+  '<div class="rev-tabs">'+tabs+'</div>' +
+  '<div class="card">'+ct('积分申请','check')+html+'</div>' +
+  '<div class="card section-gap">'+ct('商城兑换申请','bag')+exHtml+'</div>';
+}
+function adminCrmRows(list){
+  if(!list.length) return '<tr><td colspan="6" class="empty-tip">暂无客户数据</td></tr>';
+  return list.map(function(c){
+    return '<tr><td><b>'+c.name+'</b><div style="font-size:12px;color:var(--ink-3)">'+c.country+'</div></td>' +
+      '<td>'+userName(c.owner_id)+'<div style="font-size:12px;color:var(--ink-3)">'+(userRegion(c.owner_id)||'')+'</div></td>' +
+      '<td>'+rateBadge(c.rating)+'</td><td>'+statusBadge(c.status)+'</td>' +
+      '<td>'+c.contact+'<div style="font-size:12px;color:var(--ink-3)">'+c.phone+'</div></td>' +
+      '<td class="cell-mono">'+c.date+'</td></tr>';
+  }).join('');
+}
+async function viewAdminCRM(){
+  const list = await api('/customers');
+  CACHE.customers = list;
+  let rows = list;
+  if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact+userName(c.owner_id)).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
+  const opts = ['all','首次接触','跟进中','已寄样','已成交','流失'].map(function(s){
+    return '<option value="'+s+'"'+(state.crmFilter===s?' selected':'')+'>'+(s==='all'?'全部状态':s)+'</option>';
+  }).join('');
+  return ph('客户管理','全公司客户档案 · 业务员自评评级，管理员可定期复核调整') +
+  '<div class="filter-bar">' +
+    '<select class="form-select" onchange="state.crmFilter=this.value;refreshAdminCrm()">'+opts+'</select>' +
+    '<input class="form-input" placeholder="搜索客户 / 负责人 / 国家" value="'+(state.crmQ||'')+'" oninput="state.crmQ=this.value;refreshAdminCrm()">' +
+  '</div>' +
+  '<div class="card" style="padding:0"><div class="table-wrap"><table><thead><tr><th>客户</th><th>负责人</th><th>评级</th><th>状态</th><th>联系人</th><th>录入日期</th></tr></thead><tbody id="acrm-body">'+adminCrmRows(rows)+'</tbody></table></div></div>' +
+  '<div class="footer-note">评级说明：S 级 TOP8 大客户 / A 级重点客户 / B 级常规客户 / C 级潜力客户。业务员自评为主，管理员每月复核调整一次。</div>';
+}
+function refreshAdminCrm(){
+  const list = CACHE.customers || [];
+  let rows = list;
+  if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact+userName(c.owner_id)).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
+  document.getElementById('acrm-body').innerHTML = adminCrmRows(rows);
+}
+async function viewAdminAlibaba(){
+  const d = await api('/alibaba?year='+state.aliYear);
+  const mRows = d.months.map(function(m){
+    return '<tr><td class="cell-mono">'+m.month+'月</td><td class="cell-mono">'+fmtMoney(m.spend)+'</td><td class="cell-mono">'+m.leads+'</td><td class="cell-mono">'+m.deals+'</td><td><b>'+pct(m.deals,m.leads)+'</b></td><td class="cell-mono">'+fmtMoney(Math.round(m.spend/(m.deals||1)))+'</td></tr>';
+  }).join('') || '<tr><td colspan="6" class="empty-tip">该年度暂无数据，等待导入国际站表格</td></tr>';
+  const pRows = (d.people||[]).map(function(p){
+    return '<tr><td><b>'+p.name+'</b><div style="font-size:12px;color:var(--ink-3)">'+p.region+'</div></td><td class="cell-mono">'+p.assigned+'</td><td class="cell-mono">'+p.deals+'</td><td><b>'+pct(p.deals,p.assigned)+'</b></td></tr>';
+  }).join('') || '<tr><td colspan="4" class="empty-tip">暂无分配数据</td></tr>';
+  const years = [2025,2026,2027].map(function(y){
+    return '<option value="'+y+'"'+(String(y)===state.aliYear?' selected':'')+'>'+y+' 年</option>';
+  }).join('');
+  return ph('阿里国际站看板','月度投放与客户转化分析 · 数据来源：国际站后台导出表格',
+    '<select class="form-select" style="min-width:110px" onchange="state.aliYear=this.value;render()">'+years+'</select>') +
+  '<div class="stat-grid">' +
+    stat('chart','blue','累计投放花费',fmtMoney(d.total.spend)) +
+    stat('users','cyan','累计询盘客户',d.total.leads+' 个') +
+    stat('trophy','green','累计成交',d.total.deals+' 单') +
+    stat('target','gold','整体转化率',d.total.conv+'%') +
+  '</div>' +
+  '<div class="card">'+ct('月度投放数据','chart')+
+    '<div class="table-wrap"><table><thead><tr><th>月份</th><th>投放花费</th><th>询盘客户数</th><th>成交数</th><th>转化率</th><th>单客获取成本</th></tr></thead><tbody>'+mRows+'</tbody></table></div>' +
+  '</div>' +
+  '<div class="card section-gap">'+ct('人均转化分析','users')+
+    '<div class="table-wrap"><table><thead><tr><th>业务员</th><th>分配客户数</th><th>成交数</th><th>转化率</th></tr></thead><tbody>'+pRows+'</tbody></table></div>' +
+  '</div>' +
+  '<div class="info-note"><b>说明：</b>目前暂无数据。把国际站导出表格发来后，可批量导入月度花费 / 询盘 / 成交，并拆分到负责人计算个人转化率。</div>';
+}
+async function viewAdminMall(){
+  const [items, exchanges] = await Promise.all([api('/mall/items'), api('/mall/exchanges')]);
+  CACHE.mall = items; CACHE.exchanges = exchanges;
+  const secHtml = ['instant','quarterly','annual'].map(function(k){
+    const title = {instant:'即时兑换',quarterly:'季度心愿单',annual:'年度竞拍'}[k];
+    const rows = (items[k]||[]).map(function(it){
+      return '<div class="mall-item'+(it.pts>=2000?' feature':'')+'">' +
+        '<div class="mall-item-ico">'+icon(it.ico||'gift',22)+'</div>' +
+        '<div class="mall-item-name">'+it.name+'</div>' +
+        '<div class="mall-item-desc">'+it.desc+'</div>' +
+        '<div class="mall-item-ft"><div class="mall-item-pts">'+it.pts+'<small> 分</small></div><span class="badge badge-gray">在售</span></div></div>';
+    }).join('');
+    return '<div class="mall-sec"><div class="mall-sec-head"><div class="mall-sec-ico">'+icon('bag')+'</div><div><div class="mall-sec-title">'+title+'</div><div class="mall-sec-desc">商品上架与积分定价</div></div></div>' +
+      '<div class="mall-grid">'+rows+'</div></div>';
+  }).join('');
+  const exRows = exchanges.map(function(e){
+    const st = e.status==='pending'?'待发放':(e.status==='approved'?'已发放':'已驳回');
+    const cls = e.status==='pending'?'warning':(e.status==='approved'?'success':'danger');
+    return '<tr><td>'+userName(e.user_id)+'</td><td>'+e.item+'</td><td class="neg">-'+e.cost+'</td><td class="cell-mono">'+e.date+'</td><td><span class="badge badge-'+cls+'">'+st+'</span></td></tr>';
+  }).join('');
+  return ph('商城管理','商品定价与兑换记录管理') +
+  '<div class="card">'+ct('兑换记录','bag')+
+    '<div class="table-wrap"><table><thead><tr><th>业务员</th><th>商品</th><th>消耗积分</th><th>申请日期</th><th>状态</th></tr></thead><tbody>'+(exRows||'<tr><td colspan="5" class="empty-tip">暂无兑换记录</td></tr>')+'</tbody></table></div>' +
+  '</div>' +
+  '<div class="section-gap">'+secHtml+'</div>';
+}
+async function viewAdminUsers(){
+  const users = await api('/users');
+  CACHE.users = users;
+  const rows = users.filter(function(u){ return u.role!=='admin'; }).map(function(u){
+    return '<tr><td><div style="display:flex;align-items:center;gap:10px"><span class="small-ava">'+u.name.slice(0,1)+'</span><div><b>'+u.name+'</b><div style="font-size:12px;color:var(--ink-3)">'+u.region+' · 入职 '+u.joined+'</div></div></div></td>' +
+      '<td class="cell-mono"><b>'+u.cum+'</b></td><td class="cell-mono">'+u.avail+'</td><td class="cell-mono">第 '+u.rank+' 名</td>' +
+      '<td><button class="btn btn-success btn-sm" onclick="openAdjust('+u.id+',\'add\')">+'+icon('plus',13)+'</button> ' +
+      '<button class="btn btn-danger btn-sm" onclick="openAdjust('+u.id+',\'sub\')">-'+icon('minus',13)+'</button> ' +
+      '<button class="btn btn-outline btn-sm" onclick="openResetPw('+u.id+')">改密</button></td></tr>';
+  }).join('');
+  return ph('人员管理','业务员积分总览 · 管理员可手动加 / 扣积分（需填写原因，留痕可查）',
+    '<button class="btn btn-primary" onclick="openAddUser()">'+icon('plus',15)+'新建账号</button>') +
+  '<div class="card" style="padding:0"><div class="table-wrap"><table><thead><tr><th>业务员</th><th>累计积分</th><th>可用积分</th><th>年度排名</th><th>操作</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>' +
+  '<div class="footer-note">手动加扣积分会立即生效并计入积分流水；扣减仅影响可用积分，不影响年度排名的累计积分。</div>';
+}
+
+/* ================= 视图注册 ================= */
+const SALES_VIEWS = {dashboard:viewDashboard, crm:viewCRM, points:viewPoints, mall:viewMall, leaderboard:viewLeaderboard, rules:viewRules};
+const ADMIN_VIEWS = {'admin-dashboard':viewAdminDash, 'admin-review':viewAdminReview, 'admin-crm':viewAdminCRM, 'admin-alibaba':viewAdminAlibaba, 'admin-mall':viewAdminMall, 'admin-users':viewAdminUsers};
+
+/* ================= 客户交互 ================= */
+let editCustId = null;
+function openAddCustomer(){ openEditCustomer(null); }
+function openEditCustomer(id){
+  editCustId = id;
+  const c = id ? (CACHE.customers||[]).find(function(x){ return x.id===id; }) : null;
+  const ratings = ['S','A','B','C'].map(function(r){ return '<option value="'+r+'"'+(c&&c.rating===r?' selected':'')+'>'+r+' 级</option>'; }).join('');
+  const statuses = ['首次接触','跟进中','已寄样','已成交','流失'].map(function(s){ return '<option value="'+s+'"'+(c&&c.status===s?' selected':'')+'>'+s+'</option>'; }).join('');
+  openModal(modalHead(c?'编辑客户':'录入客户') +
+    '<label class="form-label">客户名称 *</label><input class="form-input" id="f-name" placeholder="公司名称" value="'+(c?c.name:'')+'">' +
+    '<label class="form-label" style="margin-top:12px">国家 *</label><input class="form-input" id="f-country" placeholder="如：德国" value="'+(c?c.country:'')+'">' +
+    '<div class="form-row" style="margin-top:12px">' +
+      '<div><label class="form-label">联系人</label><input class="form-input" id="f-contact" value="'+(c?c.contact:'')+'"></div>' +
+      '<div><label class="form-label">电话</label><input class="form-input" id="f-phone" value="'+(c?c.phone:'')+'"></div>' +
+    '</div>' +
+    '<div class="form-row" style="margin-top:12px">' +
+      '<div><label class="form-label">客户评级</label><select class="form-select" id="f-rating">'+ratings+'</select></div>' +
+      '<div><label class="form-label">客户状态</label><select class="form-select" id="f-status">'+statuses+'</select></div>' +
+    '</div>' +
+    '<label class="form-label" style="margin-top:12px">备注</label><textarea class="form-textarea" id="f-note" placeholder="客户背景、需求、跟进要点等">'+(c?c.note:'')+'</textarea>' +
+    '<div style="display:flex;gap:10px;margin-top:20px"><button class="btn btn-primary" style="flex:1" onclick="saveCustomer()">保存</button><button class="btn btn-outline" onclick="closeModal()">取消</button></div>');
+}
+async function saveCustomer(){
+  const body = {
+    name: document.getElementById('f-name').value.trim(),
+    country: document.getElementById('f-country').value.trim(),
+    contact: document.getElementById('f-contact').value.trim(),
+    phone: document.getElementById('f-phone').value.trim(),
+    rating: document.getElementById('f-rating').value,
+    status: document.getElementById('f-status').value,
+    note: document.getElementById('f-note').value.trim(),
+    date: today()
+  };
+  try {
+    if(editCustId){ await api('/customers/'+editCustId,'PUT',body); toast('客户资料已更新'); }
+    else { await api('/customers','POST',body); toast('客户已录入，可申请积分'); }
+    closeModal(); render();
+  } catch(e){ toast(e.message); }
+}
+
+/* ================= 积分申请 ================= */
+let PT_CACHE = null;
+async function ensureTypes(){
+  if(!PT_CACHE) PT_CACHE = await api('/types');
+  return PT_CACHE;
+}
+async function openApplyPoints(){
+  const [types, customers] = await Promise.all([ensureTypes(), api('/customers')]);
+  CACHE.customers = customers;
+  const typeOpts = types.map(function(g){
+    return g.items.map(function(it){ return '<option value="'+it.t+'" data-pts="'+it.p+'">'+it.t+'（'+(it.p>0?'+':'')+it.p+'分）</option>'; }).join('');
+  }).join('');
+  const custOpts = '<option value="">不关联客户</option>' + customers.map(function(c){ return '<option value="'+c.name+'">'+c.name+'</option>'; }).join('');
+  openModal(modalHead('申请积分') +
+    '<label class="form-label">积分类型 *</label><select class="form-select" id="a-type" onchange="document.getElementById(\'a-pts\').value=(this.selectedOptions[0].dataset.pts>0?\'+\':\'\')+this.selectedOptions[0].dataset.pts">'+typeOpts+'</select>' +
+    '<div class="form-row" style="margin-top:12px">' +
+      '<div><label class="form-label">对应积分</label><input class="form-input" id="a-pts" readonly style="background:var(--line-2)"></div>' +
+      '<div><label class="form-label">关联客户</label><select class="form-select" id="a-rel">'+custOpts+'</select></div>' +
+    '</div>' +
+    '<label class="form-label" style="margin-top:12px">申请说明 *</label><textarea class="form-textarea" id="a-desc" placeholder="简述事由，便于管理员核对"></textarea>' +
+    '<div style="display:flex;gap:10px;margin-top:20px"><button class="btn btn-primary" style="flex:1" onclick="submitPoints()">提交申请</button><button class="btn btn-outline" onclick="closeModal()">取消</button></div>');
+  const first = document.getElementById('a-type').selectedOptions[0];
+  document.getElementById('a-pts').value = (parseInt(first.dataset.pts)>0?'+':'')+first.dataset.pts;
+}
+async function submitPoints(){
+  const sel = document.getElementById('a-type');
+  try {
+    await api('/logs','POST',{
+      type: sel.value,
+      related: document.getElementById('a-rel').value,
+      desc: document.getElementById('a-desc').value.trim()
+    });
+    closeModal(); toast('申请已提交，等待管理员审核'); render();
+  } catch(e){ toast(e.message); }
+}
+
+/* ================= 商城兑换 ================= */
+let exItem = null;
+async function openExchange(id){
+  if(!CACHE.mall) CACHE.mall = await api('/mall/items');
+  let it = null;
+  ['instant','quarterly','annual'].forEach(function(k){ (CACHE.mall[k]||[]).forEach(function(x){ if(x.id===id) it=x; }); });
+  if(!it) return;
+  exItem = it;
+  const bal = await api('/me/balance');
+  const enough = bal.avail >= it.pts;
+  openModal(modalHead('兑换确认') +
+    '<div style="padding:6px 0 16px">' +
+      '<div style="display:flex;align-items:center;gap:14px;padding:16px;background:var(--gold-bg);border-radius:var(--radius)">' +
+        '<div class="mall-item-ico" style="margin:0">'+icon(it.ico||'gift',22)+'</div>' +
+        '<div><div style="font-weight:700;font-size:15px">'+it.name+'</div><div style="font-size:12.5px;color:var(--ink-2);margin-top:3px">'+it.desc+'</div></div>' +
+      '</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px">' +
+        '<div class="mini-stat"><span>兑换价格</span><b style="color:var(--gold)">'+it.pts+' 分</b></div>' +
+        '<div class="mini-stat"><span>我的可用积分</span><b>'+bal.avail+' 分</b></div>' +
+      '</div>' +
+      (enough ? '' : '<div class="note-box"><b>提示：</b>可用积分不足，无法提交兑换申请。</div>') +
+    '</div>' +
+    '<div style="display:flex;gap:10px"><button class="btn btn-primary" style="flex:1"'+(enough?' onclick="confirmExchange()"':' disabled')+'>确认兑换</button><button class="btn btn-outline" onclick="closeModal()">取消</button></div>');
+}
+async function confirmExchange(){
+  try {
+    await api('/mall/exchanges','POST',{ itemId: exItem.id });
+    closeModal(); toast('兑换申请已提交，等待管理员发放'); render();
+  } catch(e){ toast(e.message); }
+}
+
+/* ================= 管理员审核 ================= */
+async function approveLog(id){ try{ await api('/logs/'+id,'PUT',{status:'approved'}); toast('已通过，积分已发放'); render(); }catch(e){ toast(e.message); } }
+async function rejectLog(id){ try{ await api('/logs/'+id,'PUT',{status:'rejected'}); toast('已驳回该申请'); render(); }catch(e){ toast(e.message); } }
+async function approveEx(id){ try{ await api('/mall/exchanges/'+id,'PUT',{status:'approved'}); toast('兑换已发放，可用积分已扣减'); render(); }catch(e){ toast(e.message); } }
+async function rejectEx(id){ try{ await api('/mall/exchanges/'+id,'PUT',{status:'rejected'}); toast('已驳回该兑换申请'); render(); }catch(e){ toast(e.message); } }
+
+/* ================= 手动调整 / 账号 ================= */
+function openAdjust(uid, dir){
+  const u = (CACHE.users||[]).find(function(x){ return x.id===uid; });
+  const isAdd = dir==='add';
+  openModal(modalHead((isAdd?'加发':'扣减')+'积分 · '+(u?u.name:'')) +
+    '<div class="mini-stat" style="margin-bottom:14px"><span>当前可用积分</span><b>'+(u?u.avail:0)+' 分</b></div>' +
+    '<label class="form-label">'+(isAdd?'加发':'扣减')+'数量 *</label><input class="form-input" id="adj-amt" type="number" min="1" placeholder="请输入积分数量">' +
+    '<label class="form-label" style="margin-top:12px">原因 *（留痕备查）</label><textarea class="form-textarea" id="adj-reason" placeholder="如：季度奖励补发 / 违规扣减"></textarea>' +
+    '<div style="display:flex;gap:10px;margin-top:20px"><button class="btn '+(isAdd?'btn-success':'btn-danger')+'" style="flex:1" onclick="submitAdjust('+uid+',\''+dir+'\')">确认'+(isAdd?'加发':'扣减')+'</button><button class="btn btn-outline" onclick="closeModal()">取消</button></div>');
+}
+async function submitAdjust(uid, dir){
+  const amt = parseInt(document.getElementById('adj-amt').value);
+  const reason = document.getElementById('adj-reason').value.trim();
+  if(!amt || amt<=0){ toast('请输入有效数量'); return; }
+  if(!reason){ toast('请填写原因'); return; }
+  try {
+    await api('/adjust','POST',{ userId: uid, pts: dir==='add'?amt:-amt, desc: reason });
+    closeModal(); toast('已'+(dir==='add'?'加发 '+amt:'扣减 '+amt)+' 积分'); render();
+  } catch(e){ toast(e.message); }
+}
+function openAddUser(){
+  openModal(modalHead('新建业务员账号') +
+    '<label class="form-label">姓名 *</label><input class="form-input" id="nu-name" placeholder="姓名（登录账号）">' +
+    '<div class="form-row" style="margin-top:12px">' +
+      '<div><label class="form-label">区域</label><input class="form-input" id="nu-region" placeholder="如：欧洲区"></div>' +
+      '<div><label class="form-label">入职时间</label><input class="form-input" id="nu-joined" placeholder="如：2026-03"></div>' +
+    '</div>' +
+    '<label class="form-label" style="margin-top:12px">初始密码 *（至少 4 位）</label><input class="form-input" id="nu-pass" placeholder="初始密码">' +
+    '<div style="display:flex;gap:10px;margin-top:20px"><button class="btn btn-primary" style="flex:1" onclick="submitAddUser()">创建</button><button class="btn btn-outline" onclick="closeModal()">取消</button></div>');
+}
+async function submitAddUser(){
+  try {
+    await api('/users','POST',{
+      name: document.getElementById('nu-name').value.trim(),
+      region: document.getElementById('nu-region').value.trim(),
+      joined: document.getElementById('nu-joined').value.trim(),
+      password: document.getElementById('nu-pass').value
+    });
+    closeModal(); toast('账号已创建'); render();
+  } catch(e){ toast(e.message); }
+}
+function openResetPw(uid){
+  const u = (CACHE.users||[]).find(function(x){ return x.id===uid; });
+  openModal(modalHead('重置密码 · '+(u?u.name:'')) +
+    '<label class="form-label">新密码 *（至少 4 位）</label><input class="form-input" id="rp-pass" placeholder="新密码">' +
+    '<div style="display:flex;gap:10px;margin-top:20px"><button class="btn btn-primary" style="flex:1" onclick="submitResetPw('+uid+')">确认重置</button><button class="btn btn-outline" onclick="closeModal()">取消</button></div>');
+}
+async function submitResetPw(uid){
+  try {
+    await api('/users/'+uid+'/password','PUT',{ password: document.getElementById('rp-pass').value });
+    closeModal(); toast('密码已重置'); render();
+  } catch(e){ toast(e.message); }
+}
+
+/* ================= 初始化 ================= */
+async function init(){
+  document.getElementById('login-user').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+  document.getElementById('login-pass').addEventListener('keydown', function(e){ if(e.key==='Enter') doLogin(); });
+  if(TOKEN){
+    try {
+      const d = await api('/me');
+      state.user = d.user;
+      state.role = d.user.role;
+      state.view = d.user.role==='admin' ? 'admin-dashboard' : 'dashboard';
+      enterApp();
+    } catch(e){ logout(); }
+  }
+}
+init();
+</script>
+</body>
+</html>
