@@ -504,8 +504,8 @@ function crmCard(c){
 }
 async function viewDashboard(){
   const u = me();
-  const [bal, customers, logs, lb] = await Promise.all([
-    api('/me/balance'), api('/customers'), api('/logs'), api('/leaderboard?tab=year')
+  const [bal, customers, logs, lb, stats] = await Promise.all([
+    api('/me/balance'), api('/customers'), api('/logs'), api('/leaderboard?tab=year'), api('/me/stats')
   ]);
   CACHE.logs = logs;
   const myCusts = customers;
@@ -532,6 +532,18 @@ async function viewDashboard(){
   '<div class="stat-grid">' +
     stat('users','blue','我的客户',myCusts.length) + stat('brief','green','已成交客户',deals) +
     stat('clock','amber','待审核申请',pend.length+' 条') + stat('zap','gold','本月积分','+'+monthEarn) +
+  '</div>' +
+  '<div class="card">'+ct('客户转化一览','users')+
+    '<div class="grid-3">' +
+      '<div class="mini-stat"><span>当月分配客户</span><b>'+stats.month.assigned+' 个</b></div>' +
+      '<div class="mini-stat"><span>当月成交客户</span><b>'+stats.month.deals+' 个</b></div>' +
+      '<div class="mini-stat"><span>当月成交率</span><b>'+stats.month.conv+'%</b></div>' +
+    '</div>' +
+    '<div class="grid-3" style="margin-top:12px">' +
+      '<div class="mini-stat"><span>年度分配客户</span><b>'+stats.year.assigned+' 个</b></div>' +
+      '<div class="mini-stat"><span>年度成交客户</span><b>'+stats.year.deals+' 个</b></div>' +
+      '<div class="mini-stat"><span>年度成交率</span><b>'+stats.year.conv+'%</b></div>' +
+    '</div>' +
   '</div>' +
   '<div class="grid-2">' +
     '<div class="card">'+ct('快捷操作','zap')+
