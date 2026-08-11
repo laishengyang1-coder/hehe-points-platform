@@ -34,12 +34,13 @@ module.exports = function (db) {
     res.json({ ...b, rank: rk ? rk.rank : 0 });
   });
 
-  // 我的客户转化统计（当月 / 年度：分配、成交、成交率）
+  // 我的客户转化统计（上月 / 年度：分配、成交、成交率）
   r.get('/me/stats', (req, res) => {
     const uid = req.user.id;
-    const now = new Date();
-    const y = now.getFullYear();
-    const m = String(now.getMonth() + 1).padStart(2, '0');
+    const last = new Date();
+    last.setMonth(last.getMonth() - 1); // 上月（表格按月延迟一个月导入）
+    const y = last.getFullYear();
+    const m = String(last.getMonth() + 1).padStart(2, '0');
     const monthPrefix = y + '-' + m;
     const customers = db.prepare('SELECT status, date FROM customers WHERE owner_id=?').all(uid);
     const monthAll = customers.filter(c => (c.date || '').startsWith(monthPrefix));
@@ -47,7 +48,7 @@ module.exports = function (db) {
     const yearAll = customers.filter(c => (c.date || '').startsWith(String(y)));
     const yearDeals = yearAll.filter(c => c.status === '已成交');
     res.json({
-      month: { assigned: monthAll.length, deals: monthDeals.length, conv: monthAll.length ? Math.round(monthDeals.length / monthAll.length * 100) : 0 },
+      month: { label: y + '-' + m, assigned: monthAll.length, deals: monthDeals.length, conv: monthAll.length ? Math.round(monthDeals.length / monthAll.length * 100) : 0 },
       year: { assigned: yearAll.length, deals: yearDeals.length, conv: yearAll.length ? Math.round(yearDeals.length / yearAll.length * 100) : 0 }
     });
   });

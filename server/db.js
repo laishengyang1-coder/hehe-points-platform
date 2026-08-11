@@ -99,9 +99,13 @@ function init() {
       owner TEXT DEFAULT '',
       follow TEXT DEFAULT '',
       classify TEXT DEFAULT '',
-      amount INTEGER DEFAULT 0
+      amount INTEGER DEFAULT 0,
+      source TEXT DEFAULT '国际站'
     );
   `);
+
+  // 兼容旧库：为已存在的 opportunities 表补充 source 列
+  try { db.exec("ALTER TABLE opportunities ADD COLUMN source TEXT DEFAULT '国际站'"); } catch (e) { /* 已存在则忽略 */ }
 
   // 种子：管理员账号
   const adminCount = db.prepare('SELECT COUNT(*) c FROM users WHERE role=?').get('admin').c;

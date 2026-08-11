@@ -55,15 +55,16 @@ module.exports = function (db) {
     res.json({ ok: true });
   });
 
-  // 商机看板聚合统计（基于 opportunities 表 + ali_months 花费）
+  // 商机看板聚合统计（基于 opportunities 表 + ali_months 花费；source 区分 国际站/独立站）
   r.get('/overview', (req, res) => {
     const year = Number(req.query.year) || new Date().getFullYear();
     const month = Number(req.query.month) || new Date().getMonth() + 1;
-    const base = 'FROM opportunities WHERE year=? AND month=?';
-    const rows = db.prepare('SELECT * ' + base).all(year, month);
+    const source = req.query.source || '国际站';
+    const base = 'FROM opportunities WHERE year=? AND month=? AND source=?';
+    const rows = db.prepare('SELECT * ' + base).all(year, month, source);
     const spendRow = db.prepare('SELECT spend FROM ali_months WHERE year=? AND month=?').get(year, month);
     const spend = spendRow ? Number(spendRow.spend) : 0;
-    const months = availableMonths(db);
+    const months = availableMonths(db, source);
     if (!rows.length) {
       return res.json({ year, month, spend, total: { leads: 0, deals: 0, amount: 0, conv: 0, spend: spend, costPerLead: 0 }, byOwner: [], byCountry: [], byType: [], daily: [], levelDist: [], followDist: [], months });
     }
@@ -110,8 +111,9 @@ module.exports = function (db) {
   return r;
 };
 
-function availableMonths(db) {
-  const ops = db.prepare('SELECT DISTINCT year, month FROM opportunities ORDER BY year DESC, month DESC').all();
+function availableMonths(db, source) {
+  const sourceQ = source || '国际站';
+  const ops = db.prepare('SELECT DISTINCT year, month FROM opportunities WHERE source=? ORDER BY year DESC, month DESC').all(sourceQ);
   const ali = db.prepare('SELECT DISTINCT year, month FROM ali_months ORDER BY year DESC, month DESC').all();
   const seen = {};
   const out = [];

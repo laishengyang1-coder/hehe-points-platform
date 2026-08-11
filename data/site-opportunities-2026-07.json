@@ -1,0 +1,24 @@
+[
+ {
+  "date": "2026-07-03",
+  "type": "网站询盘",
+  "customer": "Hitesh Palrecha",
+  "country": "印度",
+  "level": "",
+  "owner": "Allen",
+  "follow": "已跟进",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2026-07-28",
+  "type": "网站询盘",
+  "customer": "Bartek",
+  "country": "波兰",
+  "level": "",
+  "owner": "Kally",
+  "follow": "已跟进",
+  "classify": "",
+  "amount": 0
+ }
+]

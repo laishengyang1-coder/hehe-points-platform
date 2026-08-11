@@ -408,7 +408,7 @@ const NAV = {
   ],
   admin: [
     {group:'总览', items:[{id:'admin-dashboard',label:'数据总览',icon:'dashboard'},{id:'admin-review',label:'积分审核',icon:'check',badge:true},{id:'admin-crm',label:'客户管理',icon:'users'}]},
-    {group:'运营', items:[{id:'admin-alibaba',label:'国际站看板',icon:'chart'},{id:'admin-mall',label:'商城管理',icon:'bag'},{id:'admin-users',label:'人员管理',icon:'user'}]}
+    {group:'运营', items:[{id:'admin-alibaba',label:'国际站看板',icon:'chart'},{id:'admin-site',label:'独立站看板',icon:'globe'},{id:'admin-mall',label:'商城管理',icon:'bag'},{id:'admin-users',label:'人员管理',icon:'user'}]}
   ]
 };
 function pendCount(){
@@ -519,6 +519,12 @@ async function viewDashboard(){
     const dot = l.kind==='spend' ? 'red' : (l.status==='pending' ? 'blue' : 'gold');
     return '<div class="act-item"><span class="act-dot '+dot+'"></span><div class="act-body">'+l.type+' <b>'+(l.pts>0?'+':'')+l.pts+'分</b>'+(l.related?'（'+l.related+'）':'')+'<div class="act-time">'+l.date+' · '+logBadge(l.status)+'</div></div></div>';
   }).join('') : '<div class="empty-tip">暂无积分动态</div>';
+  const lbRows = lb.rows || [];
+  const lbTop = lbRows.slice(0,5);
+  let lbHtml = lbTop.map(function(r){ return lbRow(r, r.id===u.id); }).join('');
+  const meRow = lbRows.find(function(r){ return r.id===u.id; });
+  if(meRow && meRow.rank > 5){ lbHtml += lbRow(meRow, true); }
+  if(!lbHtml) lbHtml = '<div class="empty-tip">暂无排名数据</div>';
   return ph('工作台','欢迎回来，'+u.name+' · '+(u.region||'')+' · 今日积分动态一览') +
   '<div class="points-panel">' +
     '<div class="points-block"><div class="points-num">'+bal.cum+'</div><div class="points-cap">累计积分 · 年度排名用</div></div>' +
@@ -533,17 +539,20 @@ async function viewDashboard(){
     stat('users','blue','我的客户',myCusts.length) + stat('brief','green','已成交客户',deals) +
     stat('clock','amber','待审核申请',pend.length+' 条') + stat('zap','gold','本月积分','+'+monthEarn) +
   '</div>' +
-  '<div class="card">'+ct('客户转化一览','users')+
-    '<div class="grid-3">' +
-      '<div class="mini-stat"><span>当月分配客户</span><b>'+stats.month.assigned+' 个</b></div>' +
-      '<div class="mini-stat"><span>当月成交客户</span><b>'+stats.month.deals+' 个</b></div>' +
-      '<div class="mini-stat"><span>当月成交率</span><b>'+stats.month.conv+'%</b></div>' +
+  '<div class="grid-2">' +
+    '<div class="card">'+ct('客户转化一览','users')+
+      '<div class="grid-3">' +
+        '<div class="mini-stat"><span>上月分配客户（'+stats.month.label+'）</span><b>'+stats.month.assigned+' 个</b></div>' +
+        '<div class="mini-stat"><span>上月成交客户</span><b>'+stats.month.deals+' 个</b></div>' +
+        '<div class="mini-stat"><span>上月成交率</span><b>'+stats.month.conv+'%</b></div>' +
+      '</div>' +
+      '<div class="grid-3" style="margin-top:12px">' +
+        '<div class="mini-stat"><span>年度分配客户</span><b>'+stats.year.assigned+' 个</b></div>' +
+        '<div class="mini-stat"><span>年度成交客户</span><b>'+stats.year.deals+' 个</b></div>' +
+        '<div class="mini-stat"><span>年度成交率</span><b>'+stats.year.conv+'%</b></div>' +
+      '</div>' +
     '</div>' +
-    '<div class="grid-3" style="margin-top:12px">' +
-      '<div class="mini-stat"><span>年度分配客户</span><b>'+stats.year.assigned+' 个</b></div>' +
-      '<div class="mini-stat"><span>年度成交客户</span><b>'+stats.year.deals+' 个</b></div>' +
-      '<div class="mini-stat"><span>年度成交率</span><b>'+stats.year.conv+'%</b></div>' +
-    '</div>' +
+    '<div class="card">'+ct('积分排行榜','trophy','<span class="more" onclick="go(\'leaderboard\')">完整榜单 →</span>')+lbHtml+'</div>' +
   '</div>' +
   '<div class="grid-2">' +
     '<div class="card">'+ct('快捷操作','zap')+
@@ -777,10 +786,10 @@ function refreshAdminCrm(){
   if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact+userName(c.owner_id)).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
   document.getElementById('acrm-body').innerHTML = adminCrmRows(rows);
 }
-async function viewAdminAlibaba(){
+async function boardView(source, boardTitle, boardDesc, noteHtml){
   const key = state.aliKey || '2026-07';
   const parts = key.split('-');
-  const d = await api('/alibaba/overview?year='+parts[0]+'&month='+parts[1]);
+  const d = await api('/alibaba/overview?year='+parts[0]+'&month='+parts[1]+'&source='+encodeURIComponent(source));
   const t = d.total || { leads:0, deals:0, amount:0, conv:0 };
   const monOpts = (d.months||[{year:2026,month:7}]).map(function(mo){
     const k = mo.year+'-'+String(mo.month).padStart(2,'0');
@@ -812,7 +821,7 @@ async function viewAdminAlibaba(){
     return '<div class="hbar-row"><div class="hbar-label">'+x.follow+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxF*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
   }).join('') || '<div class="empty-tip">暂无数据</div>';
   const noData = t.leads === 0;
-  return ph('阿里国际站看板','商机 → 成交 → 转化 全链路分析 · 数据来源：国际站导出表格（自动导入）',
+  return ph(boardTitle, boardDesc,
     '<select class="form-select" style="min-width:140px" onchange="state.aliKey=this.value;render()">'+monOpts+'</select>') +
   '<div class="stat-grid">' +
     stat('users','blue','商机总数',(noData?'—':t.leads+' 个')) +
@@ -822,7 +831,7 @@ async function viewAdminAlibaba(){
     stat('chart','cyan','投放花费',(t.spend>0?fmtMoney(t.spend):'—')) +
     stat('trend','red','单客成本',(t.costPerLead>0?'¥'+t.costPerLead:'—')) +
   '</div>' +
-  (noData ? '<div class="empty-tip">该月份暂无商机数据，将对应月份的「商机统计表」放入 data/ 目录后重新部署即可导入</div>' :
+  (noData ? '<div class="empty-tip">该月份暂无'+source+'商机数据，将对应月份的商机统计表放入 data/ 目录后重新部署即可导入</div>' :
   '<div class="grid-2">' +
     '<div class="card">'+ct('业务经理排名','users')+
       '<div class="table-wrap"><table><thead><tr><th>经理</th><th>商机数</th><th>成交</th><th>成交金额</th><th>转化率</th></tr></thead><tbody>'+oRows+'</tbody></table></div>' +
@@ -831,12 +840,20 @@ async function viewAdminAlibaba(){
   '</div>' +
   '<div class="grid-2 section-gap">' +
     '<div class="card">'+ct('TOP 国家','globe')+cBars+'</div>' +
-    '<div class="card">'+ct('国际站等级分布','target')+levelBars+'</div>' +
+    '<div class="card">'+ct('等级分布','target')+levelBars+'</div>' +
   '</div>' +
   '<div class="card section-gap">'+ct('每日商机趋势','trend')+'<div class="vchart">'+vCols+'</div>' +
     '<div class="legend"><span class="lg"><span class="dot" style="background:var(--gold)"></span>每日商机数量</span></div></div>' +
   '<div class="card section-gap">'+ct('跟进情况 TOP8','clock')+followBars+'</div>' +
-  '<div class="info-note"><b>说明：</b>成交金额单位为 <b>USD</b>（美金）；数据来自 7 月国际站商机统计表（116 条商机，已自动导入）。每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。</div>');
+  '<div class="info-note">'+noteHtml+'</div>');
+}
+async function viewAdminAlibaba(){
+  return boardView('国际站','阿里国际站看板','商机 → 成交 → 转化 全链路分析 · 数据来源：国际站导出表格（自动导入）',
+    '<b>说明：</b>成交金额单位为 <b>USD</b>（美金）；数据来自 7 月国际站商机统计表（116 条商机，已自动导入）。每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。');
+}
+async function viewAdminSite(){
+  return boardView('独立站','独立站看板','独立站询盘 → 跟进 → 转化 分析 · 数据来源：网站询盘表（自动导入）',
+    '<b>说明：</b>数据来自 7 月「网站询盘」表（独立站渠道询盘，已自动导入）。独立站每月有询盘数据后，同样放入 data/ 目录即可更新。');
 }
 async function viewAdminMall(){
   const [items, exchanges] = await Promise.all([api('/mall/items'), api('/mall/exchanges')]);
@@ -882,7 +899,7 @@ async function viewAdminUsers(){
 
 /* ================= 视图注册 ================= */
 const SALES_VIEWS = {dashboard:viewDashboard, crm:viewCRM, points:viewPoints, mall:viewMall, leaderboard:viewLeaderboard, rules:viewRules};
-const ADMIN_VIEWS = {'admin-dashboard':viewAdminDash, 'admin-review':viewAdminReview, 'admin-crm':viewAdminCRM, 'admin-alibaba':viewAdminAlibaba, 'admin-mall':viewAdminMall, 'admin-users':viewAdminUsers};
+const ADMIN_VIEWS = {'admin-dashboard':viewAdminDash, 'admin-review':viewAdminReview, 'admin-crm':viewAdminCRM, 'admin-alibaba':viewAdminAlibaba, 'admin-site':viewAdminSite, 'admin-mall':viewAdminMall, 'admin-users':viewAdminUsers};
 
 /* ================= 客户交互 ================= */
 let editCustId = null;

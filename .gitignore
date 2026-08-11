@@ -1,6 +1,7 @@
 node_modules/
 data/*
 !data/opportunities-*.json
+!data/site-opportunities-*.json
 !data/ali-months.json
 *.log
 .DS_Store
