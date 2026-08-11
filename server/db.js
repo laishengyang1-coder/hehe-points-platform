@@ -87,6 +87,20 @@ function init() {
       assigned INTEGER DEFAULT 0,
       deals INTEGER DEFAULT 0
     );
+    CREATE TABLE IF NOT EXISTS opportunities (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      year INTEGER NOT NULL,
+      month INTEGER NOT NULL,
+      date TEXT DEFAULT '',
+      type TEXT DEFAULT '',
+      customer TEXT DEFAULT '',
+      country TEXT DEFAULT '',
+      level TEXT DEFAULT '',
+      owner TEXT DEFAULT '',
+      follow TEXT DEFAULT '',
+      classify TEXT DEFAULT '',
+      amount INTEGER DEFAULT 0
+    );
   `);
 
   // 种子：管理员账号

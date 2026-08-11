@@ -243,6 +243,22 @@ tbody tr:hover td{background:#fafbfc}
 .cell-mono{font-variant-numeric:tabular-nums}
 .rule-table td:first-child{font-weight:600;color:var(--ink)}
 .rule-table td:nth-child(2){color:var(--gold);font-weight:700;white-space:nowrap}
+/* ---- 看板图表 ---- */
+.hbar-row{display:flex;align-items:center;gap:12px;margin-bottom:11px}
+.hbar-label{width:110px;font-size:13px;color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0}
+.hbar-track{flex:1;height:16px;background:var(--line-2);border-radius:4px;overflow:hidden}
+.hbar-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold-2));border-radius:4px;min-width:2px}
+.hbar-val{width:52px;font-size:12.5px;font-weight:700;color:var(--ink);text-align:right;flex-shrink:0}
+.vchart{display:flex;align-items:flex-end;gap:6px;height:150px;padding:6px 2px 0;border-bottom:1px solid var(--line)}
+.vcol{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.vcol .bar{width:100%;max-width:26px;background:linear-gradient(180deg,var(--gold-2),var(--gold));border-radius:3px 3px 0 0;margin:0}
+.vcol .vday{font-size:10.5px;color:var(--ink-3);white-space:nowrap;transform:scale(.9)}
+.vcol .vnum{font-size:10.5px;color:var(--ink-2);font-weight:700}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;color:var(--ink-2)}
+.legend .lg{display:flex;align-items:center;gap:6px}
+.legend .dot{width:10px;height:10px;border-radius:3px}
+.deal-row td{background:var(--gold-bg)!important}
+.deal-row:hover td{background:var(--gold-bg)!important}
 </style>
 </head>
 <body>
@@ -321,7 +337,7 @@ async function api(path, method, body){
 }
 
 /* ================= 状态 ================= */
-const state = { user:null, role:'sales', view:'dashboard', lbTab:'year', revFilter:'pending', crmFilter:'all', crmQ:'', aliYear: String(new Date().getFullYear()) };
+const state = { user:null, role:'sales', view:'dashboard', lbTab:'year', revFilter:'pending', crmFilter:'all', crmQ:'', aliKey:'2026-07' };
 let CACHE = {}; // 客户/流水/商城/榜单等数据缓存，交互后失效重拉
 
 function me(){ return state.user; }
@@ -749,31 +765,63 @@ function refreshAdminCrm(){
   document.getElementById('acrm-body').innerHTML = adminCrmRows(rows);
 }
 async function viewAdminAlibaba(){
-  const d = await api('/alibaba?year='+state.aliYear);
-  const mRows = d.months.map(function(m){
-    return '<tr><td class="cell-mono">'+m.month+'月</td><td class="cell-mono">'+fmtMoney(m.spend)+'</td><td class="cell-mono">'+m.leads+'</td><td class="cell-mono">'+m.deals+'</td><td><b>'+pct(m.deals,m.leads)+'</b></td><td class="cell-mono">'+fmtMoney(Math.round(m.spend/(m.deals||1)))+'</td></tr>';
-  }).join('') || '<tr><td colspan="6" class="empty-tip">该年度暂无数据，等待导入国际站表格</td></tr>';
-  const pRows = (d.people||[]).map(function(p){
-    return '<tr><td><b>'+p.name+'</b><div style="font-size:12px;color:var(--ink-3)">'+p.region+'</div></td><td class="cell-mono">'+p.assigned+'</td><td class="cell-mono">'+p.deals+'</td><td><b>'+pct(p.deals,p.assigned)+'</b></td></tr>';
-  }).join('') || '<tr><td colspan="4" class="empty-tip">暂无分配数据</td></tr>';
-  const years = [2025,2026,2027].map(function(y){
-    return '<option value="'+y+'"'+(String(y)===state.aliYear?' selected':'')+'>'+y+' 年</option>';
+  const key = state.aliKey || '2026-07';
+  const parts = key.split('-');
+  const d = await api('/alibaba/overview?year='+parts[0]+'&month='+parts[1]);
+  const t = d.total || { leads:0, deals:0, amount:0, conv:0 };
+  const monOpts = (d.months||[{year:2026,month:7}]).map(function(mo){
+    const k = mo.year+'-'+String(mo.month).padStart(2,'0');
+    return '<option value="'+k+'"'+(k===key?' selected':'')+'>'+mo.year+' 年 '+mo.month+' 月</option>';
   }).join('');
-  return ph('阿里国际站看板','月度投放与客户转化分析 · 数据来源：国际站后台导出表格',
-    '<select class="form-select" style="min-width:110px" onchange="state.aliYear=this.value;render()">'+years+'</select>') +
+  const oRows = (d.byOwner||[]).map(function(o){
+    return '<tr><td><b>'+o.owner+'</b></td><td class="cell-mono">'+o.leads+'</td><td class="cell-mono">'+o.deals+'</td><td class="cell-mono">'+fmtMoney(o.amount)+'</td><td><b>'+o.conv+'%</b></td></tr>';
+  }).join('') || '<tr><td colspan="5" class="empty-tip">暂无数据</tr></td>';
+  const maxT = Math.max.apply(null, (d.byType||[]).map(function(x){return x.count;}).concat([1]));
+  const typeBars = (d.byType||[]).map(function(x){
+    return '<div class="hbar-row"><div class="hbar-label">'+x.type+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxT*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const maxC = Math.max.apply(null, (d.byCountry||[]).map(function(x){return x.count;}).concat([1]));
+  const cBars = (d.byCountry||[]).map(function(x){
+    return '<div class="hbar-row"><div class="hbar-label">'+x.country+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxC*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const maxL = Math.max.apply(null, (d.levelDist||[]).map(function(x){return x.count;}).concat([1]));
+  const levelBars = (d.levelDist||[]).map(function(x){
+    return '<div class="hbar-row"><div class="hbar-label">'+(x.level||'无等级')+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxL*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const days = d.daily || [];
+  const maxD = Math.max.apply(null, days.map(function(x){return x.count;}).concat([1]));
+  const vCols = days.map(function(x){
+    const h = Math.max(4, Math.round(x.count/maxD*120));
+    return '<div class="vcol"><div class="vnum">'+x.count+'</div><div class="bar" style="height:'+h+'px"></div><div class="vday">'+(x.date||'').slice(5)+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const maxF = Math.max.apply(null, (d.followDist||[]).slice(0,8).map(function(x){return x.count;}).concat([1]));
+  const followBars = (d.followDist||[]).slice(0,8).map(function(x){
+    return '<div class="hbar-row"><div class="hbar-label">'+x.follow+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxF*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const noData = t.leads === 0;
+  return ph('阿里国际站看板','商机 → 成交 → 转化 全链路分析 · 数据来源：国际站导出表格（自动导入）',
+    '<select class="form-select" style="min-width:140px" onchange="state.aliKey=this.value;render()">'+monOpts+'</select>') +
   '<div class="stat-grid">' +
-    stat('chart','blue','累计投放花费',fmtMoney(d.total.spend)) +
-    stat('users','cyan','累计询盘客户',d.total.leads+' 个') +
-    stat('trophy','green','累计成交',d.total.deals+' 单') +
-    stat('target','gold','整体转化率',d.total.conv+'%') +
+    stat('users','blue','商机总数',(noData?'—':t.leads+' 个')) +
+    stat('trophy','green','成交单数',(noData?'—':t.deals+' 单')) +
+    stat('bag','gold','成交金额',(noData?'—':fmtMoney(t.amount))) +
+    stat('target','purple','转化率',(noData?'—':t.conv+'%')) +
   '</div>' +
-  '<div class="card">'+ct('月度投放数据','chart')+
-    '<div class="table-wrap"><table><thead><tr><th>月份</th><th>投放花费</th><th>询盘客户数</th><th>成交数</th><th>转化率</th><th>单客获取成本</th></tr></thead><tbody>'+mRows+'</tbody></table></div>' +
+  (noData ? '<div class="empty-tip">该月份暂无商机数据，将对应月份的「商机统计表」放入 data/ 目录后重新部署即可导入</div>' :
+  '<div class="grid-2">' +
+    '<div class="card">'+ct('业务经理排名','users')+
+      '<div class="table-wrap"><table><thead><tr><th>经理</th><th>商机数</th><th>成交</th><th>成交金额</th><th>转化率</th></tr></thead><tbody>'+oRows+'</tbody></table></div>' +
+    '</div>' +
+    '<div class="card">'+ct('商机类型分布','pie')+typeBars+'</div>' +
   '</div>' +
-  '<div class="card section-gap">'+ct('人均转化分析','users')+
-    '<div class="table-wrap"><table><thead><tr><th>业务员</th><th>分配客户数</th><th>成交数</th><th>转化率</th></tr></thead><tbody>'+pRows+'</tbody></table></div>' +
+  '<div class="grid-2 section-gap">' +
+    '<div class="card">'+ct('TOP 国家','globe')+cBars+'</div>' +
+    '<div class="card">'+ct('国际站等级分布','target')+levelBars+'</div>' +
   '</div>' +
-  '<div class="info-note"><b>说明：</b>目前暂无数据。把国际站导出表格发来后，可批量导入月度花费 / 询盘 / 成交，并拆分到负责人计算个人转化率。</div>';
+  '<div class="card section-gap">'+ct('每日商机趋势','trend')+'<div class="vchart">'+vCols+'</div>' +
+    '<div class="legend"><span class="lg"><span class="dot" style="background:var(--gold)"></span>每日商机数量</span></div></div>' +
+  '<div class="card section-gap">'+ct('跟进情况 TOP8','clock')+followBars+'</div>' +
+  '<div class="info-note"><b>说明：</b>数据来自 7 月国际站商机统计表（116 条商机，已自动导入）。每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。</div>');
 }
 async function viewAdminMall(){
   const [items, exchanges] = await Promise.all([api('/mall/items'), api('/mall/exchanges')]);

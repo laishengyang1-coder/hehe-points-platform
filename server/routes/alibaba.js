@@ -55,5 +55,56 @@ module.exports = function (db) {
     res.json({ ok: true });
   });
 
+  // 商机看板聚合统计（基于 opportunities 表）
+  r.get('/overview', (req, res) => {
+    const year = Number(req.query.year) || new Date().getFullYear();
+    const month = Number(req.query.month) || new Date().getMonth() + 1;
+    const base = 'FROM opportunities WHERE year=? AND month=?';
+    const rows = db.prepare('SELECT * ' + base).all(year, month);
+    if (!rows.length) {
+      return res.json({ year, month, total: { leads: 0, deals: 0, amount: 0, conv: 0 }, byOwner: [], byCountry: [], byType: [], daily: [], levelDist: [], followDist: [], months: availableMonths(db) });
+    }
+    const deals = rows.filter(x => x.classify === '成交客户');
+    const total = {
+      leads: rows.length,
+      deals: deals.length,
+      amount: deals.reduce((s, x) => s + x.amount, 0),
+      conv: Math.round(deals.length / rows.length * 100)
+    };
+    // 按负责人
+    const ownerMap = {};
+    rows.forEach(x => { (ownerMap[x.owner] = ownerMap[x.owner] || []).push(x); });
+    const byOwner = Object.keys(ownerMap).map(o => {
+      const list = ownerMap[o];
+      const d = list.filter(x => x.classify === '成交客户');
+      return { owner: o, leads: list.length, deals: d.length, amount: d.reduce((s, x) => s + x.amount, 0), conv: Math.round(d.length / list.length * 100) };
+    }).sort((a, b) => b.leads - a.leads);
+    // 按国家 TOP10
+    const cMap = {};
+    rows.forEach(x => { cMap[x.country] = (cMap[x.country] || 0) + 1; });
+    const byCountry = Object.keys(cMap).map(c => ({ country: c, count: cMap[c] })).sort((a, b) => b.count - a.count).slice(0, 10);
+    // 按商机类型
+    const tMap = {};
+    rows.forEach(x => { tMap[x.type] = (tMap[x.type] || 0) + 1; });
+    const byType = Object.keys(tMap).map(t => ({ type: t, count: tMap[t] }));
+    // 每日趋势
+    const dMap = {};
+    rows.forEach(x => { dMap[x.date] = (dMap[x.date] || 0) + 1; });
+    const daily = Object.keys(dMap).map(d => ({ date: d, count: dMap[d] })).sort((a, b) => a.date < b.date ? -1 : 1);
+    // 等级分布
+    const lMap = {};
+    rows.forEach(x => { lMap[x.level || '无等级'] = (lMap[x.level || '无等级'] || 0) + 1; });
+    const levelDist = Object.keys(lMap).map(l => ({ level: l, count: lMap[l] }));
+    // 跟进情况分布
+    const fMap = {};
+    rows.forEach(x => { fMap[x.follow || '未填写'] = (fMap[x.follow || '未填写'] || 0) + 1; });
+    const followDist = Object.keys(fMap).map(f => ({ follow: f, count: fMap[f] })).sort((a, b) => b.count - a.count);
+    res.json({ year, month, total, byOwner, byCountry, byType, daily, levelDist, followDist, months: availableMonths(db) });
+  });
+
   return r;
 };
+
+function availableMonths(db) {
+  return db.prepare('SELECT DISTINCT year, month FROM opportunities ORDER BY year DESC, month DESC').all();
+}

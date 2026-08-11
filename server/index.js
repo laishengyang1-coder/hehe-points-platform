@@ -12,6 +12,25 @@ const alibabaRoutes = require('./routes/alibaba');
 const PORT = process.env.PORT || 3000;
 const db = init();
 
+// 商机数据自动导入：data/opportunities-YYYY-MM.json → opportunities 表（按年/月去重）
+(function importOpportunities() {
+  const fs = require('fs');
+  const dataDir = path.join(__dirname, '..', 'data');
+  const files = fs.existsSync(dataDir) ? fs.readdirSync(dataDir).filter(f => /^opportunities-\d{4}-\d{2}\.json$/.test(f)) : [];
+  files.forEach(file => {
+    const m = file.match(/^opportunities-(\d{4})-(\d{2})\.json$/);
+    const year = Number(m[1]), month = Number(m[2]);
+    const exists = db.prepare('SELECT COUNT(*) c FROM opportunities WHERE year=? AND month=?').get(year, month).c;
+    if (exists > 0) return;
+    const rows = JSON.parse(fs.readFileSync(path.join(dataDir, file), 'utf8'));
+    const ins = db.prepare(
+      'INSERT INTO opportunities (year,month,date,type,customer,country,level,owner,follow,classify,amount) VALUES (?,?,?,?,?,?,?,?,?,?,?)'
+    );
+    rows.forEach(r => ins.run(year, month, r.date || '', r.type || '', r.customer || '', r.country || '', r.level || '', r.owner || '', r.follow || '', r.classify || '', r.amount || 0));
+    console.log(`[import] 已导入商机数据 ${file}（${rows.length} 条）`);
+  });
+})();
+
 // 首次启动若没有任何业务员账号，自动创建演示账号（生产可删）
 if (db.prepare("SELECT COUNT(*) c FROM users WHERE role='sales'").get().c === 0) {
   const demo = [
