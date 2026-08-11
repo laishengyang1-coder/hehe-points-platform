@@ -806,6 +806,8 @@ async function viewAdminAlibaba(){
     stat('trophy','green','成交单数',(noData?'—':t.deals+' 单')) +
     stat('bag','gold','成交金额',(noData?'—':fmtMoney(t.amount))) +
     stat('target','purple','转化率',(noData?'—':t.conv+'%')) +
+    stat('chart','cyan','投放花费',(t.spend>0?fmtMoney(t.spend):'—')) +
+    stat('trend','red','单客成本',(t.costPerLead>0?'¥'+t.costPerLead:'—')) +
   '</div>' +
   (noData ? '<div class="empty-tip">该月份暂无商机数据，将对应月份的「商机统计表」放入 data/ 目录后重新部署即可导入</div>' :
   '<div class="grid-2">' +

@@ -31,6 +31,19 @@ const db = init();
   });
 })();
 
+// 月度花费导入：data/ali-months.json → ali_months 表（upsert spend，leads/deals 由商机表实时统计）
+(function importAliMonths() {
+  const fs = require('fs');
+  const f = path.join(__dirname, '..', 'data', 'ali-months.json');
+  if (!fs.existsSync(f)) return;
+  const rows = JSON.parse(fs.readFileSync(f, 'utf8'));
+  const upsert = db.prepare(
+    'INSERT INTO ali_months (year,month,spend) VALUES (?,?,?) ON CONFLICT(year,month) DO UPDATE SET spend=excluded.spend'
+  );
+  rows.forEach(r => upsert.run(Number(r.year), Number(r.month), Number(r.spend) || 0));
+  console.log(`[import] 已导入月度花费 ${rows.length} 条`);
+})();
+
 // 首次启动若没有任何业务员账号，自动创建演示账号（生产可删）
 if (db.prepare("SELECT COUNT(*) c FROM users WHERE role='sales'").get().c === 0) {
   const demo = [

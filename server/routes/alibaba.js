@@ -55,21 +55,26 @@ module.exports = function (db) {
     res.json({ ok: true });
   });
 
-  // 商机看板聚合统计（基于 opportunities 表）
+  // 商机看板聚合统计（基于 opportunities 表 + ali_months 花费）
   r.get('/overview', (req, res) => {
     const year = Number(req.query.year) || new Date().getFullYear();
     const month = Number(req.query.month) || new Date().getMonth() + 1;
     const base = 'FROM opportunities WHERE year=? AND month=?';
     const rows = db.prepare('SELECT * ' + base).all(year, month);
+    const spendRow = db.prepare('SELECT spend FROM ali_months WHERE year=? AND month=?').get(year, month);
+    const spend = spendRow ? Number(spendRow.spend) : 0;
+    const months = availableMonths(db);
     if (!rows.length) {
-      return res.json({ year, month, total: { leads: 0, deals: 0, amount: 0, conv: 0 }, byOwner: [], byCountry: [], byType: [], daily: [], levelDist: [], followDist: [], months: availableMonths(db) });
+      return res.json({ year, month, spend, total: { leads: 0, deals: 0, amount: 0, conv: 0, spend: spend, costPerLead: 0 }, byOwner: [], byCountry: [], byType: [], daily: [], levelDist: [], followDist: [], months });
     }
     const deals = rows.filter(x => x.classify === '成交客户');
     const total = {
       leads: rows.length,
       deals: deals.length,
       amount: deals.reduce((s, x) => s + x.amount, 0),
-      conv: Math.round(deals.length / rows.length * 100)
+      conv: Math.round(deals.length / rows.length * 100),
+      spend: spend,
+      costPerLead: spend > 0 ? Math.round(spend / rows.length * 100) / 100 : 0
     };
     // 按负责人
     const ownerMap = {};
@@ -99,12 +104,20 @@ module.exports = function (db) {
     const fMap = {};
     rows.forEach(x => { fMap[x.follow || '未填写'] = (fMap[x.follow || '未填写'] || 0) + 1; });
     const followDist = Object.keys(fMap).map(f => ({ follow: f, count: fMap[f] })).sort((a, b) => b.count - a.count);
-    res.json({ year, month, total, byOwner, byCountry, byType, daily, levelDist, followDist, months: availableMonths(db) });
+    res.json({ year, month, spend, total, byOwner, byCountry, byType, daily, levelDist, followDist, months });
   });
 
   return r;
 };
 
 function availableMonths(db) {
-  return db.prepare('SELECT DISTINCT year, month FROM opportunities ORDER BY year DESC, month DESC').all();
+  const ops = db.prepare('SELECT DISTINCT year, month FROM opportunities ORDER BY year DESC, month DESC').all();
+  const ali = db.prepare('SELECT DISTINCT year, month FROM ali_months ORDER BY year DESC, month DESC').all();
+  const seen = {};
+  const out = [];
+  ops.concat(ali).forEach(m => {
+    const k = m.year + '-' + m.month;
+    if (!seen[k]) { seen[k] = 1; out.push({ year: m.year, month: m.month }); }
+  });
+  return out.sort((a, b) => (a.year - b.year) || (a.month - b.month)).reverse();
 }
