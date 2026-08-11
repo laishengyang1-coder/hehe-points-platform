@@ -21,7 +21,7 @@ jobs:
           mkdir -p ~/.ssh
           echo "$KEY" > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
-          tar czf /tmp/points.tar.gz server public deploy package.json package-lock.json
+          tar czf /tmp/points.tar.gz server public deploy data package.json package-lock.json
           scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new /tmp/points.tar.gz "$USER@$HOST:/tmp/points.tar.gz"
           scp -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new deploy/remote.sh "$USER@$HOST:/tmp/remote.sh"
           ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new "$USER@$HOST" "bash /tmp/remote.sh"
