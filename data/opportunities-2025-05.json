@@ -1,0 +1,233 @@
+[
+ {
+  "date": "2025-05-07",
+  "type": "TM商机",
+  "customer": "r A",
+  "country": "印度",
+  "level": "L2",
+  "owner": "Allen",
+  "follow": "已报价，等待客户反馈",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-08",
+  "type": "TM商机",
+  "customer": "Ammar kweider",
+  "country": "沙特阿拉伯",
+  "level": "L1",
+  "owner": "Kat",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-15",
+  "type": "TM商机",
+  "customer": "Umair Idrees",
+  "country": "巴基斯坦",
+  "level": "L2",
+  "owner": "Allen",
+  "follow": "订单已确认/履约中",
+  "classify": "成交客户",
+  "amount": 30360.0
+ },
+ {
+  "date": "2025-05-22",
+  "type": "询盘商机",
+  "customer": "akashdeep Singh",
+  "country": "加拿大",
+  "level": "L2",
+  "owner": "Allen",
+  "follow": "订单已确认/履约中",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-22",
+  "type": "询盘商机",
+  "customer": "Cali Super",
+  "country": "墨西哥",
+  "level": "无",
+  "owner": "Kat",
+  "follow": "等待客户回复",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-23",
+  "type": "TM商机",
+  "customer": "Faisal Alanazi",
+  "country": "沙特阿拉伯",
+  "level": "L3",
+  "owner": "Kally",
+  "follow": "客户画像/应用信息已确认",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-24",
+  "type": "TM商机",
+  "customer": "Rodolfo Ortega",
+  "country": "美国",
+  "level": "L1",
+  "owner": "Kally",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-27",
+  "type": "询盘商机",
+  "customer": "Uxmanzor Jose",
+  "country": "美国",
+  "level": "L2",
+  "owner": "Allen",
+  "follow": "已报价，等待客户反馈",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-27",
+  "type": "询盘商机",
+  "customer": "Joel MoretoMondragon",
+  "country": "秘鲁",
+  "level": "无",
+  "owner": "Kat",
+  "follow": "等待客户回复",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-28",
+  "type": "TM商机",
+  "customer": "Dillon Hobbs",
+  "country": "美国",
+  "level": "L2",
+  "owner": "Allen",
+  "follow": "产品/颜色暂不匹配",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-29",
+  "type": "TM商机",
+  "customer": "S Davis",
+  "country": "美国",
+  "level": "L3",
+  "owner": "Lia",
+  "follow": "已报价，等待客户反馈",
+  "classify": "意向客户",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-31",
+  "type": "TM商机",
+  "customer": "Ktu Arusha",
+  "country": "英国",
+  "level": "L2",
+  "owner": "Lia",
+  "follow": "初步询价/询盘处理中",
+  "classify": "意向客户",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-31",
+  "type": "TM商机",
+  "customer": "Beer Singh",
+  "country": "加拿大",
+  "level": "L3",
+  "owner": "Kally",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-31",
+  "type": "TM商机",
+  "customer": "hakam hazeem",
+  "country": "文莱",
+  "level": "L3",
+  "owner": "Kat",
+  "follow": "已报价，等待客户反馈",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-31",
+  "type": "TM商机",
+  "customer": "Jariel Hernandez",
+  "country": "美国",
+  "level": "L1",
+  "owner": "Kat",
+  "follow": "已报价，等待客户反馈",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-05-31",
+  "type": "TM商机",
+  "customer": "Jerome Witzki",
+  "country": "德国",
+  "level": "L4",
+  "owner": "Kat",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-06-02",
+  "type": "TM商机",
+  "customer": "Robert Sistanich",
+  "country": "美国",
+  "level": "L2",
+  "owner": "Kat",
+  "follow": "产品/颜色暂不匹配",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-06-02",
+  "type": "TM商机",
+  "customer": "Danny Labrador",
+  "country": "波多黎各",
+  "level": "L1",
+  "owner": "Kally",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-06-02",
+  "type": "TM商机",
+  "customer": "toppy masai",
+  "country": "肯尼亚",
+  "level": "L2",
+  "owner": "Kally",
+  "follow": "持续沟通中",
+  "classify": "",
+  "amount": 0
+ },
+ {
+  "date": "2025-06-02",
+  "type": "询盘商机",
+  "customer": "Gerson Cardona",
+  "country": "美国",
+  "level": "L2",
+  "owner": "Lia",
+  "follow": "等待客户回复",
+  "classify": "意向客户",
+  "amount": 0
+ },
+ {
+  "date": "2025-06-03",
+  "type": "询盘商机",
+  "customer": "LuisAntonio PeraltaMadurno",
+  "country": "秘鲁",
+  "level": "L1",
+  "owner": "Allen",
+  "follow": "等待客户回复",
+  "classify": "",
+  "amount": 0
+ }
+]

@@ -6,7 +6,7 @@
   "country": "罗马尼亚",
   "level": "L2",
   "owner": "Allen",
-  "follow": "发送Catalog",
+  "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
  },
@@ -17,7 +17,7 @@
   "country": "美国",
   "level": "L1",
   "owner": "Leo",
-  "follow": "想要样品",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -28,7 +28,7 @@
   "country": "美国",
   "level": "L3",
   "owner": "Amber",
-  "follow": "发送Catalog",
+  "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
  },
@@ -39,7 +39,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "价格没谈拢",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -50,7 +50,7 @@
   "country": "喀麦隆",
   "level": "L2",
   "owner": "Kat",
-  "follow": "觉得我们价格贵了",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -61,7 +61,7 @@
   "country": "阿曼",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -72,7 +72,7 @@
   "country": "土耳其",
   "level": "L2",
   "owner": "Allen",
-  "follow": "询问产品细节",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -83,7 +83,7 @@
   "country": "西班牙",
   "level": "L2",
   "owner": "Leo",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -94,8 +94,8 @@
   "country": "美国",
   "level": "无等级",
   "owner": "Amber",
-  "follow": "暂无回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -105,7 +105,7 @@
   "country": "加拿大",
   "level": "无等级",
   "owner": "Brienna",
-  "follow": "对产品感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -116,7 +116,7 @@
   "country": "加拿大",
   "level": "L4",
   "owner": "Kat",
-  "follow": "询问产品性能",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -127,7 +127,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -138,8 +138,8 @@
   "country": "美国",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -149,7 +149,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Leo",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -160,7 +160,7 @@
   "country": "黎巴嫩",
   "level": "L3",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -171,7 +171,7 @@
   "country": "塔吉克斯坦",
   "level": "L2",
   "owner": "Lia",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -182,7 +182,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Amber",
-  "follow": "询价样品",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -193,7 +193,7 @@
   "country": "澳大利亚",
   "level": "L1",
   "owner": "Leo",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -204,7 +204,7 @@
   "country": "菲律宾",
   "level": "L2",
   "owner": "Kat",
-  "follow": "价格没谈拢",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -215,7 +215,7 @@
   "country": "阿尔巴尼亚",
   "level": "L2",
   "owner": "Amber",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -226,8 +226,8 @@
   "country": "秘鲁",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -237,7 +237,7 @@
   "country": "美国",
   "level": "无等级",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -248,7 +248,7 @@
   "country": "加拿大",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -259,8 +259,8 @@
   "country": "美国",
   "level": "L3",
   "owner": "Kally",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -270,7 +270,7 @@
   "country": "美国",
   "level": "L1",
   "owner": "Lia",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -281,7 +281,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Amber",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -292,7 +292,7 @@
   "country": "美国",
   "level": "L3",
   "owner": "Leo",
-  "follow": "寄送样品",
+  "follow": "样品已寄送，等待测试/反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -303,7 +303,7 @@
   "country": "黎巴嫩",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -314,7 +314,7 @@
   "country": "约旦",
   "level": "无等级",
   "owner": "Kat",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -325,8 +325,8 @@
   "country": "美国",
   "level": "L1",
   "owner": "Clarie",
-  "follow": "已报价",
-  "classify": "未分类",
+  "follow": "已报价，等待客户反馈",
+  "classify": "",
   "amount": 0
  },
  {
@@ -336,7 +336,7 @@
   "country": "亚美尼亚",
   "level": "L2",
   "owner": "Leo",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -347,7 +347,7 @@
   "country": "黎巴嫩",
   "level": "L3",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -358,7 +358,7 @@
   "country": "美国",
   "level": "L1",
   "owner": "Lia",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -369,7 +369,7 @@
   "country": "加拿大",
   "level": "L2",
   "owner": "Amber",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -380,7 +380,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -391,7 +391,7 @@
   "country": "韩国",
   "level": "L2",
   "owner": "Leo",
-  "follow": "还在沟通",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -402,7 +402,7 @@
   "country": "沙特",
   "level": "L2",
   "owner": "Amber",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -413,9 +413,9 @@
   "country": "美国",
   "level": "L2",
   "owner": "Kally",
-  "follow": "下单样品",
+  "follow": "订单已确认/履约中",
   "classify": "成交客户",
-  "amount": 80
+  "amount": 80.0
  },
  {
   "date": "2026-07-08",
@@ -424,8 +424,8 @@
   "country": "墨西哥",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -435,7 +435,7 @@
   "country": "博茨瓦纳",
   "level": "L2",
   "owner": "Kat",
-  "follow": "对抗高温的产品感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -446,7 +446,7 @@
   "country": "印度",
   "level": "L4",
   "owner": "Amber",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -457,7 +457,7 @@
   "country": "菲律宾",
   "level": "L2",
   "owner": "Kally",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -468,8 +468,8 @@
   "country": "菲律宾",
   "level": "L2",
   "owner": "Lia",
-  "follow": "要PET",
-  "classify": "未分类",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
   "amount": 0
  },
  {
@@ -479,7 +479,7 @@
   "country": "以色列",
   "level": "L2",
   "owner": "Allen",
-  "follow": "对车灯膜感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -490,7 +490,7 @@
   "country": "法国",
   "level": "无等级",
   "owner": "Brienna",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -501,7 +501,7 @@
   "country": "澳大利亚",
   "level": "L2",
   "owner": "Kally",
-  "follow": "对样品感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -512,8 +512,8 @@
   "country": "美国",
   "level": "L2",
   "owner": "Kat",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -523,7 +523,7 @@
   "country": "巴基斯坦",
   "level": "L2",
   "owner": "Allen",
-  "follow": "加联系方式",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -534,8 +534,8 @@
   "country": "挪威",
   "level": "L3",
   "owner": "Kally",
-  "follow": "想要干贴的",
-  "classify": "未分类",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
   "amount": 0
  },
  {
@@ -545,7 +545,7 @@
   "country": "智利",
   "level": "L3",
   "owner": "Allen",
-  "follow": "已在别人那里下单",
+  "follow": "订单已确认/履约中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -556,8 +556,8 @@
   "country": "美国",
   "level": "L3",
   "owner": "Leo",
-  "follow": "需要乙烯基的",
-  "classify": "未分类",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
   "amount": 0
  },
  {
@@ -567,7 +567,7 @@
   "country": "加拿大",
   "level": "无等级",
   "owner": "Brienna",
-  "follow": "觉得我们价格贵了",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -578,7 +578,7 @@
   "country": "哥伦比亚",
   "level": "L2",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -589,9 +589,9 @@
   "country": "英国",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "下单色卡",
+  "follow": "订单已确认/履约中",
   "classify": "成交客户",
-  "amount": 30
+  "amount": 30.0
  },
  {
   "date": "2026-07-13",
@@ -600,7 +600,7 @@
   "country": "加拿大",
   "level": "L2",
   "owner": "Lia",
-  "follow": "觉得我们价格贵了",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -611,7 +611,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Allen",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -622,7 +622,7 @@
   "country": "加拿大",
   "level": "L2",
   "owner": "Leo",
-  "follow": "觉得我们价格贵了",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -633,7 +633,7 @@
   "country": "美国",
   "level": "无等级",
   "owner": "Amber",
-  "follow": "对定制颜色感兴趣",
+  "follow": "定制方案评估中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -644,7 +644,7 @@
   "country": "瑞士",
   "level": "L2",
   "owner": "Kat",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -655,8 +655,8 @@
   "country": "多米尼加",
   "level": "L4",
   "owner": "Clarie",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -666,7 +666,7 @@
   "country": "沙特",
   "level": "L2",
   "owner": "Lia",
-  "follow": "寄送样册",
+  "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
  },
@@ -677,7 +677,7 @@
   "country": "澳大利亚",
   "level": "L2",
   "owner": "Allen",
-  "follow": "发送Catalog",
+  "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
  },
@@ -688,7 +688,7 @@
   "country": "巴基斯坦",
   "level": "L1",
   "owner": "Leo",
-  "follow": "价格没谈拢",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -699,7 +699,7 @@
   "country": "澳大利亚",
   "level": "L1",
   "owner": "Amber",
-  "follow": "觉得我们价格贵了",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -710,7 +710,7 @@
   "country": "蒙古",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -721,7 +721,7 @@
   "country": "美国",
   "level": "L1",
   "owner": "Brienna",
-  "follow": "发送Catalog",
+  "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
  },
@@ -732,7 +732,7 @@
   "country": "美国",
   "level": "L1",
   "owner": "Kat",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -743,7 +743,7 @@
   "country": "柬埔寨",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "之前用过PET对TPU感兴趣",
+  "follow": "产品/材质暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -754,8 +754,8 @@
   "country": "加拿大",
   "level": "L1",
   "owner": "Kally",
-  "follow": "想要干贴的",
-  "classify": "未分类",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
   "amount": 0
  },
  {
@@ -765,7 +765,7 @@
   "country": "以色列",
   "level": "无等级",
   "owner": "Lia",
-  "follow": "价格没谈拢",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -776,7 +776,7 @@
   "country": "沙特",
   "level": "L2",
   "owner": "Kat",
-  "follow": "发送价目表",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -787,7 +787,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Leo",
-  "follow": "价格没谈拢",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -798,8 +798,8 @@
   "country": "利比亚",
   "level": "无等级",
   "owner": "Amber",
-  "follow": "暂无回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -809,7 +809,7 @@
   "country": "白俄罗斯",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "正在沟通",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -820,7 +820,7 @@
   "country": "格鲁吉亚",
   "level": "L2",
   "owner": "Kat",
-  "follow": "询问实车照片",
+  "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
  },
@@ -831,8 +831,8 @@
   "country": "白俄罗斯",
   "level": "L1",
   "owner": "Clarie",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -842,7 +842,7 @@
   "country": "布隆迪",
   "level": "无等级",
   "owner": "Clarie",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -853,8 +853,8 @@
   "country": "刚果布",
   "level": "L2",
   "owner": "未分配",
-  "follow": "对产品感兴趣",
-  "classify": "未分类",
+  "follow": "客户有意向，需求确认中",
+  "classify": "",
   "amount": 0
  },
  {
@@ -864,7 +864,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Allen",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -875,7 +875,7 @@
   "country": "澳大利亚",
   "level": "L1",
   "owner": "Kat",
-  "follow": "正在沟通",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -886,7 +886,7 @@
   "country": "澳大利亚",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -897,7 +897,7 @@
   "country": "安提瓜和巴布达",
   "level": "L1",
   "owner": "Kally",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -908,7 +908,7 @@
   "country": "泰国",
   "level": "L2",
   "owner": "Allen",
-  "follow": "询问色卡",
+  "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
  },
@@ -919,9 +919,9 @@
   "country": "沙特",
   "level": "L2",
   "owner": "Leo",
-  "follow": "已下单",
+  "follow": "订单已确认/履约中",
   "classify": "成交客户",
-  "amount": 260
+  "amount": 260.0
  },
  {
   "date": "2026-07-23",
@@ -930,7 +930,7 @@
   "country": "阿联酋",
   "level": "L1",
   "owner": "Kat",
-  "follow": "对双色的膜感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -941,9 +941,9 @@
   "country": "印度",
   "level": "L4",
   "owner": "Allen",
-  "follow": "下单",
+  "follow": "订单已确认/履约中",
   "classify": "成交客户",
-  "amount": 405
+  "amount": 405.0
  },
  {
   "date": "2026-07-23",
@@ -952,7 +952,7 @@
   "country": "哥斯达黎加",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "在别人家下单了",
+  "follow": "订单已确认/履约中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -963,8 +963,8 @@
   "country": "加纳",
   "level": "无等级",
   "owner": "Clarie",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -974,7 +974,7 @@
   "country": "印度尼西亚",
   "level": "无等级",
   "owner": "Kat",
-  "follow": "交换联系方式",
+  "follow": "已建立联系",
   "classify": "意向客户",
   "amount": 0
  },
@@ -985,7 +985,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Lia",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -996,7 +996,7 @@
   "country": "澳大利亚",
   "level": "L1",
   "owner": "Amber",
-  "follow": "价格没谈拢",
+  "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1007,8 +1007,8 @@
   "country": "波多黎各",
   "level": "L2",
   "owner": "Allen",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -1018,7 +1018,7 @@
   "country": "以色列",
   "level": "L1",
   "owner": "Leo",
-  "follow": "已在别人那里下单",
+  "follow": "订单已确认/履约中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1028,8 +1028,8 @@
   "customer": "NOUH Mellad",
   "country": "美国",
   "level": "L2",
-  "owner": "未分配",
-  "follow": "交换联系方式",
+  "owner": "Kat",
+  "follow": "已建立联系",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1040,8 +1040,8 @@
   "country": "美国",
   "level": "L1",
   "owner": "Clarie",
-  "follow": "暂未回复",
-  "classify": "未分类",
+  "follow": "等待客户回复",
+  "classify": "",
   "amount": 0
  },
  {
@@ -1051,7 +1051,7 @@
   "country": "伊拉克",
   "level": "L3",
   "owner": "Kally",
-  "follow": "打招呼",
+  "follow": "已建立联系",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1062,7 +1062,7 @@
   "country": "加拿大",
   "level": "L1",
   "owner": "Lia",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1073,7 +1073,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Allen",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1084,7 +1084,7 @@
   "country": "爱尔兰",
   "level": "L2",
   "owner": "Leo",
-  "follow": "在别人家下单了",
+  "follow": "订单已确认/履约中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1095,7 +1095,7 @@
   "country": "黎巴嫩",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1106,9 +1106,9 @@
   "country": "沙特",
   "level": "L3",
   "owner": "Allen",
-  "follow": "下单",
+  "follow": "订单已确认/履约中",
   "classify": "成交客户",
-  "amount": 690
+  "amount": 690.0
  },
  {
   "date": "2026-07-28",
@@ -1117,7 +1117,7 @@
   "country": "美国",
   "level": "L1",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1128,7 +1128,7 @@
   "country": "以色列",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "还在沟通",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1139,7 +1139,7 @@
   "country": "阿曼",
   "level": "L2",
   "owner": "Kally",
-  "follow": "还在沟通",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1150,7 +1150,7 @@
   "country": "开曼群岛",
   "level": "L1",
   "owner": "Lia",
-  "follow": "对我们的产品感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1161,9 +1161,9 @@
   "country": "希腊",
   "level": "L1",
   "owner": "Clarie",
-  "follow": "下单样品",
+  "follow": "订单已确认/履约中",
   "classify": "成交客户",
-  "amount": 80
+  "amount": 80.0
  },
  {
   "date": "2026-07-29",
@@ -1172,7 +1172,7 @@
   "country": "沙特",
   "level": "L2",
   "owner": "Kally",
-  "follow": "交换联系方式",
+  "follow": "已建立联系",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1183,7 +1183,7 @@
   "country": "美国",
   "level": "L2",
   "owner": "Brienna",
-  "follow": "对样品感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1194,7 +1194,7 @@
   "country": "卡塔尔",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "还在沟通",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1205,7 +1205,7 @@
   "country": "伊拉克",
   "level": "L2",
   "owner": "Clarie",
-  "follow": "对样品感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1216,7 +1216,7 @@
   "country": "沙特",
   "level": "无等级",
   "owner": "Allen",
-  "follow": "没有客户要的颜色",
+  "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1227,7 +1227,7 @@
   "country": "匈牙利",
   "level": "L1",
   "owner": "Amber",
-  "follow": "已报价",
+  "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1238,7 +1238,7 @@
   "country": "美国",
   "level": "L1",
   "owner": "Brienna",
-  "follow": "沟通中",
+  "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1249,7 +1249,7 @@
   "country": "美国",
   "level": "无等级",
   "owner": "Clarie",
-  "follow": "对粉色感兴趣",
+  "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1260,7 +1260,7 @@
   "country": "泰国",
   "level": "无等级",
   "owner": "Kat",
-  "follow": "询价",
+  "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
  },
@@ -1271,8 +1271,8 @@
   "country": "印度",
   "level": "无等级",
   "owner": "Clarie",
-  "follow": "要乙烯基的",
-  "classify": "未分类",
+  "follow": "产品/材质暂不匹配",
+  "classify": "",
   "amount": 0
  }
 ]
