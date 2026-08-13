@@ -1,3 +1,67 @@
 [
-  { "year": 2026, "month": 7, "spend": 7553.75 }
+ {
+  "year": 2025,
+  "month": 7,
+  "spend": 6810.6
+ },
+ {
+  "year": 2025,
+  "month": 8,
+  "spend": 4110.0
+ },
+ {
+  "year": 2025,
+  "month": 9,
+  "spend": 4604.35
+ },
+ {
+  "year": 2025,
+  "month": 10,
+  "spend": 4891.17
+ },
+ {
+  "year": 2025,
+  "month": 11,
+  "spend": 4432.48
+ },
+ {
+  "year": 2025,
+  "month": 12,
+  "spend": 4503.64
+ },
+ {
+  "year": 2026,
+  "month": 1,
+  "spend": 6164.75
+ },
+ {
+  "year": 2026,
+  "month": 2,
+  "spend": 5448.66
+ },
+ {
+  "year": 2026,
+  "month": 3,
+  "spend": 8710.67
+ },
+ {
+  "year": 2026,
+  "month": 4,
+  "spend": 8909.46
+ },
+ {
+  "year": 2026,
+  "month": 5,
+  "spend": 8399.76
+ },
+ {
+  "year": 2026,
+  "month": 6,
+  "spend": 8164.26
+ },
+ {
+  "year": 2026,
+  "month": 7,
+  "spend": 7553.75
+ }
 ]
