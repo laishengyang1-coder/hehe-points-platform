@@ -337,7 +337,7 @@ async function api(path, method, body){
 }
 
 /* ================= 状态 ================= */
-const state = { user:null, role:'sales', view:'dashboard', lbTab:'year', revFilter:'pending', crmFilter:'all', crmQ:'', aliKey:'2026-07', aliMode:'month', aliYear:'2026' };
+const state = { user:null, role:'sales', view:'dashboard', lbTab:'year', revFilter:'pending', crmFilter:'all', crmQ:'', crmCountry:'all', crmOwner:'all', crmOrder:'all', aliKey:'2026-07', aliMode:'month', aliYear:'2026' };
 let CACHE = {}; // 客户/流水/商城/榜单等数据缓存，交互后失效重拉
 
 function me(){ return state.user; }
@@ -570,11 +570,24 @@ async function viewDashboard(){
 function salesCrmHtml(list){
   return list.length ? list.map(crmCard).join('') : '<div class="empty-tip">暂无客户，点击右上角「录入客户」开始沉淀客户资产</div>';
 }
+function isOrdered(c){ return c.status==='已下单' || (c.note||'').indexOf('下单')>-1; }
+function countryOpts(list){
+  const countries = [...new Set(list.map(function(c){ return c.country; }).filter(Boolean))].sort();
+  return '<option value="all">全部国家</option>' + countries.map(function(c){
+    return '<option value="'+c+'"'+(state.crmCountry===c?' selected':'')+'>'+c+'</option>';
+  }).join('');
+}
+function orderOpts(){
+  return '<option value="all">全部跟进</option>' +
+    '<option value="ordered"'+(state.crmOrder==='ordered'?' selected':'')+'>已下单</option>';
+}
 async function viewCRM(){
   const list = await api('/customers');
   CACHE.customers = list;
   let rows = list;
   if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmCountry!=='all') rows = rows.filter(function(c){ return c.country===state.crmCountry; });
+  if(state.crmOrder==='ordered') rows = rows.filter(isOrdered);
   if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
   const opts = ['all','首次接触','跟进中','已寄样','已成交','流失'].map(function(s){
     return '<option value="'+s+'"'+(state.crmFilter===s?' selected':'')+'>'+(s==='all'?'全部状态':s)+'</option>';
@@ -583,6 +596,8 @@ async function viewCRM(){
     '<button class="btn btn-primary" onclick="openAddCustomer()">'+icon('plus',15)+'录入客户</button>') +
   '<div class="filter-bar">' +
     '<select class="form-select" onchange="state.crmFilter=this.value;refreshCrm()">'+opts+'</select>' +
+    '<select class="form-select" onchange="state.crmCountry=this.value;refreshCrm()">'+countryOpts(list)+'</select>' +
+    '<select class="form-select" onchange="state.crmOrder=this.value;refreshCrm()">'+orderOpts()+'</select>' +
     '<input class="form-input" placeholder="搜索客户 / 国家 / 联系人" value="'+(state.crmQ||'')+'" oninput="state.crmQ=this.value;refreshCrm()">' +
   '</div>' +
   '<div class="crm-grid" id="crm-grid">'+salesCrmHtml(rows)+'</div>';
@@ -591,6 +606,8 @@ function refreshCrm(){
   const list = CACHE.customers || [];
   let rows = list;
   if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmCountry!=='all') rows = rows.filter(function(c){ return c.country===state.crmCountry; });
+  if(state.crmOrder==='ordered') rows = rows.filter(isOrdered);
   if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
   document.getElementById('crm-grid').innerHTML = salesCrmHtml(rows);
 }
@@ -767,13 +784,23 @@ async function viewAdminCRM(){
   CACHE.customers = list;
   let rows = list;
   if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmCountry!=='all') rows = rows.filter(function(c){ return c.country===state.crmCountry; });
+  if(state.crmOwner!=='all') rows = rows.filter(function(c){ return userName(c.owner_id)===state.crmOwner; });
+  if(state.crmOrder==='ordered') rows = rows.filter(isOrdered);
   if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact+userName(c.owner_id)).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
   const opts = ['all','首次接触','跟进中','已寄样','已成交','流失'].map(function(s){
     return '<option value="'+s+'"'+(state.crmFilter===s?' selected':'')+'>'+(s==='all'?'全部状态':s)+'</option>';
   }).join('');
+  const ownerNames = [...new Set(list.map(function(c){ return userName(c.owner_id); }).filter(Boolean))].sort();
+  const ownerOpts = '<option value="all">全部销售</option>' + ownerNames.map(function(n){
+    return '<option value="'+n+'"'+(state.crmOwner===n?' selected':'')+'>'+n+'</option>';
+  }).join('');
   return ph('客户管理','全公司客户档案 · 业务员自评评级，管理员可定期复核调整') +
   '<div class="filter-bar">' +
     '<select class="form-select" onchange="state.crmFilter=this.value;refreshAdminCrm()">'+opts+'</select>' +
+    '<select class="form-select" onchange="state.crmCountry=this.value;refreshAdminCrm()">'+countryOpts(list)+'</select>' +
+    '<select class="form-select" onchange="state.crmOwner=this.value;refreshAdminCrm()">'+ownerOpts+'</select>' +
+    '<select class="form-select" onchange="state.crmOrder=this.value;refreshAdminCrm()">'+orderOpts()+'</select>' +
     '<input class="form-input" placeholder="搜索客户 / 负责人 / 国家" value="'+(state.crmQ||'')+'" oninput="state.crmQ=this.value;refreshAdminCrm()">' +
   '</div>' +
   '<div class="card" style="padding:0"><div class="table-wrap"><table><thead><tr><th>客户</th><th>负责人</th><th>评级</th><th>状态</th><th>联系人</th><th>录入日期</th></tr></thead><tbody id="acrm-body">'+adminCrmRows(rows)+'</tbody></table></div></div>' +
@@ -783,6 +810,9 @@ function refreshAdminCrm(){
   const list = CACHE.customers || [];
   let rows = list;
   if(state.crmFilter!=='all') rows = rows.filter(function(c){ return c.status===state.crmFilter; });
+  if(state.crmCountry!=='all') rows = rows.filter(function(c){ return c.country===state.crmCountry; });
+  if(state.crmOwner!=='all') rows = rows.filter(function(c){ return userName(c.owner_id)===state.crmOwner; });
+  if(state.crmOrder==='ordered') rows = rows.filter(isOrdered);
   if(state.crmQ) rows = rows.filter(function(c){ return (c.name+c.country+c.contact+userName(c.owner_id)).toLowerCase().indexOf(state.crmQ.toLowerCase())>-1; });
   document.getElementById('acrm-body').innerHTML = adminCrmRows(rows);
 }
