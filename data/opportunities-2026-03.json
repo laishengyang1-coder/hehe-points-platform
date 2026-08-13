@@ -236,7 +236,7 @@
   "customer": "Lionel Nyameni",
   "country": "赞比亚",
   "level": "L3",
-  "owner": "",
+  "owner": "未分配",
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
@@ -247,7 +247,7 @@
   "customer": "MAMADOU SARR",
   "country": "塞尔维亚",
   "level": "无等级",
-  "owner": "",
+  "owner": "未分配",
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
