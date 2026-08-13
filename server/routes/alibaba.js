@@ -64,7 +64,7 @@ module.exports = function (db) {
     if (req.query.mode === 'year') {
       const rows = db.prepare('SELECT * FROM opportunities WHERE year=? AND source=?').all(year, source);
       const deals = rows.filter(x => x.classify === '成交客户');
-      const spend = Number(db.prepare('SELECT SUM(spend) s FROM ali_months WHERE year=?').get(year).s) || 0;
+      const spend = source === '独立站' ? 0 : (Number(db.prepare('SELECT SUM(spend) s FROM ali_months WHERE year=?').get(year).s) || 0);
       const total = {
         leads: rows.length,
         deals: deals.length,
@@ -87,7 +87,7 @@ module.exports = function (db) {
     const base = 'FROM opportunities WHERE year=? AND month=? AND source=?';
     const rows = db.prepare('SELECT * ' + base).all(year, month, source);
     const spendRow = db.prepare('SELECT spend FROM ali_months WHERE year=? AND month=?').get(year, month);
-    const spend = spendRow ? Number(spendRow.spend) : 0;
+    const spend = source === '独立站' ? 0 : (spendRow ? Number(spendRow.spend) : 0);
     const months = availableMonths(db, source);
     if (!rows.length) {
       return res.json({ year, month, spend, total: { leads: 0, deals: 0, amount: 0, conv: 0, spend: spend, costPerLead: 0 }, byOwner: [], byCountry: [], byType: [], daily: [], levelDist: [], followDist: [], months });
