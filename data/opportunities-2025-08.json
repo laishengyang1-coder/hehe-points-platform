@@ -71,7 +71,7 @@
   "customer": "Javier Velazco",
   "country": "美国",
   "level": "L2",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
@@ -93,7 +93,7 @@
   "customer": "Brice Biassadila",
   "country": "贝宁",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
@@ -115,7 +115,7 @@
   "customer": "Mano Avila",
   "country": "美国",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
@@ -247,7 +247,7 @@
   "customer": "Mamadou sanogo",
   "country": "刚果",
   "level": "L2",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
@@ -269,7 +269,7 @@
   "customer": "Robert Arnold",
   "country": "德国",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "已报价，等待客户反馈",
   "classify": "意向客户",
   "amount": 0
@@ -291,7 +291,7 @@
   "customer": "Raul Camacho",
   "country": "墨西哥",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "已发送/待提供产品资料",
   "classify": "意向客户",
   "amount": 0
@@ -379,7 +379,7 @@
   "customer": "Adiza Sare",
   "country": "加纳",
   "level": "无等级",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
@@ -456,7 +456,7 @@
   "customer": "Mohammed OMAR",
   "country": "沙特阿拉伯",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
@@ -511,7 +511,7 @@
   "customer": "Mzingaye Sibanda",
   "country": "南非",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
@@ -522,7 +522,7 @@
   "customer": "ROBERT MINASSIAN",
   "country": "美国",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "已成交",
   "classify": "成交客户",
   "amount": 1017.0
@@ -621,7 +621,7 @@
   "customer": "Eric Cintron",
   "country": "美国",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
@@ -676,7 +676,7 @@
   "customer": "Mohamed Arsath",
   "country": "印度",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "产品/颜色暂不匹配",
   "classify": "意向客户",
   "amount": 0

@@ -5,7 +5,7 @@
   "customer": "Angel Yered",
   "country": "墨西哥",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "初步询价/询盘处理中",
   "classify": "意向客户",
   "amount": 0
@@ -38,7 +38,7 @@
   "customer": "Scott DaPrato",
   "country": "澳大利亚",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
@@ -71,7 +71,7 @@
   "customer": "Domagoj Moharic",
   "country": "德国",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "样品已寄送，等待测试/反馈",
   "classify": "意向客户",
   "amount": 0
@@ -104,7 +104,7 @@
   "customer": "Nabaraj Rai",
   "country": "美国",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
@@ -137,7 +137,7 @@
   "customer": "Matthew H",
   "country": "美国",
   "level": "L1",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "定制方案评估中",
   "classify": "",
   "amount": 0
@@ -225,7 +225,7 @@
   "customer": "mezgin saeed",
   "country": "埃及",
   "level": "L2",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
@@ -401,7 +401,7 @@
   "customer": "Ahmed Sanaullah",
   "country": "巴基斯坦",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "客户有意向，需求确认中",
   "classify": "意向客户",
   "amount": 0
@@ -412,7 +412,7 @@
   "customer": "Koudjo OKOUMA",
   "country": "多哥",
   "level": "L3",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "价格协商中",
   "classify": "意向客户",
   "amount": 0
@@ -500,7 +500,7 @@
   "customer": "mhmd alnzy",
   "country": "科威特",
   "level": "L2",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "订单已确认/履约中",
   "classify": "成交客户",
   "amount": 0
@@ -566,7 +566,7 @@
   "customer": "Phu Nguyen",
   "country": "越南",
   "level": "无等级",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
@@ -621,7 +621,7 @@
   "customer": "Francesco Di salvo",
   "country": "法国",
   "level": "L2",
-  "owner": "Clarie",
+  "owner": "Claire",
   "follow": "订单已确认/履约中",
   "classify": "成交客户",
   "amount": 0
