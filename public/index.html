@@ -916,7 +916,7 @@ async function yearBoardView(source, title, desc, noteHtml){
   const maxSpend = Math.max.apply(null, monthly.map(function(x){return x.spend;}).concat([1]));
   const spendCols = monthly.map(function(m){
     const h = Math.max(4, Math.round(m.spend/maxSpend*120));
-    return '<div class="vcol"><div class="vnum">'+(m.spend>0?Math.round(m.spend):'')+'</div><div class="bar" style="height:'+h+'px;background:linear-gradient(180deg,var(--cyan),var(--cyan-2))"></div><div class="vday">'+m.month+'月</div></div>';
+    return '<div class="vcol"><div class="vnum">'+(m.spend>0?Math.round(m.spend):'')+'</div><div class="bar" style="height:'+h+'px;background:linear-gradient(180deg,#22a6b8,#0e7490)"></div><div class="vday">'+m.month+'月</div></div>';
   }).join('');
   const maxFn = Math.max.apply(null, (d.funnel||[]).map(function(x){return x.count;}).concat([1]));
   const funnelBars = (d.funnel||[]).map(function(x){
