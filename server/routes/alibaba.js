@@ -55,11 +55,35 @@ module.exports = function (db) {
     res.json({ ok: true });
   });
 
-  // 商机看板聚合统计（基于 opportunities 表 + ali_months 花费；source 区分 国际站/独立站）
+  // 商机看板聚合统计（基于 opportunities 表 + ali_months 花费；source 区分 国际站/独立站；mode=year 年度总览）
   r.get('/overview', (req, res) => {
     const year = Number(req.query.year) || new Date().getFullYear();
-    const month = Number(req.query.month) || new Date().getMonth() + 1;
     const source = req.query.source || '国际站';
+
+    // ---- 年度总览 ----
+    if (req.query.mode === 'year') {
+      const rows = db.prepare('SELECT * FROM opportunities WHERE year=? AND source=?').all(year, source);
+      const deals = rows.filter(x => x.classify === '成交客户');
+      const spend = Number(db.prepare('SELECT SUM(spend) s FROM ali_months WHERE year=?').get(year).s) || 0;
+      const total = {
+        leads: rows.length,
+        deals: deals.length,
+        amount: deals.reduce((s, x) => s + x.amount, 0),
+        conv: rows.length ? Math.round(deals.length / rows.length * 100) : 0,
+        spend: spend,
+        costPerLead: spend > 0 ? Math.round(spend / rows.length * 100) / 100 : 0
+      };
+      const monthly = [];
+      for (let m = 1; m <= 12; m++) {
+        const mr = rows.filter(x => x.month === m);
+        const md = mr.filter(x => x.classify === '成交客户');
+        monthly.push({ month: m, leads: mr.length, deals: md.length, amount: md.reduce((s, x) => s + x.amount, 0), conv: mr.length ? Math.round(md.length / mr.length * 100) : 0 });
+      }
+      return res.json({ mode: 'year', year, source, total, byOwner: ownerAgg(rows), byCountry: countryAgg(rows), byType: typeAgg(rows), monthly, years: availableYears(db, source) });
+    }
+
+    // ---- 月度看板 ----
+    const month = Number(req.query.month) || new Date().getMonth() + 1;
     const base = 'FROM opportunities WHERE year=? AND month=? AND source=?';
     const rows = db.prepare('SELECT * ' + base).all(year, month, source);
     const spendRow = db.prepare('SELECT spend FROM ali_months WHERE year=? AND month=?').get(year, month);
@@ -77,22 +101,9 @@ module.exports = function (db) {
       spend: spend,
       costPerLead: spend > 0 ? Math.round(spend / rows.length * 100) / 100 : 0
     };
-    // 按负责人
-    const ownerMap = {};
-    rows.forEach(x => { (ownerMap[x.owner] = ownerMap[x.owner] || []).push(x); });
-    const byOwner = Object.keys(ownerMap).map(o => {
-      const list = ownerMap[o];
-      const d = list.filter(x => x.classify === '成交客户');
-      return { owner: o, leads: list.length, deals: d.length, amount: d.reduce((s, x) => s + x.amount, 0), conv: Math.round(d.length / list.length * 100) };
-    }).sort((a, b) => b.leads - a.leads);
-    // 按国家 TOP10
-    const cMap = {};
-    rows.forEach(x => { cMap[x.country] = (cMap[x.country] || 0) + 1; });
-    const byCountry = Object.keys(cMap).map(c => ({ country: c, count: cMap[c] })).sort((a, b) => b.count - a.count).slice(0, 10);
-    // 按商机类型
-    const tMap = {};
-    rows.forEach(x => { tMap[x.type] = (tMap[x.type] || 0) + 1; });
-    const byType = Object.keys(tMap).map(t => ({ type: t, count: tMap[t] }));
+    const byOwner = ownerAgg(rows);
+    const byCountry = countryAgg(rows);
+    const byType = typeAgg(rows);
     // 每日趋势
     const dMap = {};
     rows.forEach(x => { dMap[x.date] = (dMap[x.date] || 0) + 1; });
@@ -110,6 +121,30 @@ module.exports = function (db) {
 
   return r;
 };
+
+function ownerAgg(rows) {
+  const ownerMap = {};
+  rows.forEach(x => { (ownerMap[x.owner] = ownerMap[x.owner] || []).push(x); });
+  return Object.keys(ownerMap).map(o => {
+    const list = ownerMap[o];
+    const d = list.filter(x => x.classify === '成交客户');
+    return { owner: o, leads: list.length, deals: d.length, amount: d.reduce((s, x) => s + x.amount, 0), conv: Math.round(d.length / list.length * 100) };
+  }).sort((a, b) => b.leads - a.leads);
+}
+function countryAgg(rows) {
+  const cMap = {};
+  rows.forEach(x => { cMap[x.country] = (cMap[x.country] || 0) + 1; });
+  return Object.keys(cMap).map(c => ({ country: c, count: cMap[c] })).sort((a, b) => b.count - a.count).slice(0, 10);
+}
+function typeAgg(rows) {
+  const tMap = {};
+  rows.forEach(x => { tMap[x.type] = (tMap[x.type] || 0) + 1; });
+  return Object.keys(tMap).map(t => ({ type: t, count: tMap[t] }));
+}
+function availableYears(db, source) {
+  const sourceQ = source || '国际站';
+  return db.prepare('SELECT DISTINCT year FROM opportunities WHERE source=? ORDER BY year DESC').all(sourceQ).map(x => x.year);
+}
 
 function availableMonths(db, source) {
   const sourceQ = source || '国际站';

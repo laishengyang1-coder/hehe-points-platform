@@ -337,7 +337,7 @@ async function api(path, method, body){
 }
 
 /* ================= 状态 ================= */
-const state = { user:null, role:'sales', view:'dashboard', lbTab:'year', revFilter:'pending', crmFilter:'all', crmQ:'', aliKey:'2026-07' };
+const state = { user:null, role:'sales', view:'dashboard', lbTab:'year', revFilter:'pending', crmFilter:'all', crmQ:'', aliKey:'2026-07', aliMode:'month', aliYear:'2026' };
 let CACHE = {}; // 客户/流水/商城/榜单等数据缓存，交互后失效重拉
 
 function me(){ return state.user; }
@@ -848,8 +848,62 @@ async function boardView(source, boardTitle, boardDesc, noteHtml){
   '<div class="info-note">'+noteHtml+'</div>');
 }
 async function viewAdminAlibaba(){
-  return boardView('国际站','阿里国际站看板','商机 → 成交 → 转化 全链路分析 · 数据来源：国际站导出表格（自动导入）',
-    '<b>说明：</b>成交金额单位为 <b>USD</b>（美金）；数据来自 7 月国际站商机统计表（116 条商机，已自动导入）。每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。');
+  const tabs = '<div class="lb-tabs" style="margin-bottom:16px">' +
+    '<button class="lb-tab'+(state.aliMode==='month'?' active':'')+'" onclick="state.aliMode=\'month\';render()">月度看板</button>' +
+    '<button class="lb-tab'+(state.aliMode==='year'?' active':'')+'" onclick="state.aliMode=\'year\';render()">年度总览</button>' +
+  '</div>';
+  if(state.aliMode==='year') return tabs + await yearBoardView('国际站','阿里国际站年度总览','全年商机 → 成交 → 转化 · 数据来源：国际站导出表格',
+    '<b>说明：</b>年度数据由各月商机表汇总，成交金额单位为 <b>USD</b>（美金）。');
+  return tabs + await boardView('国际站','阿里国际站看板','商机 → 成交 → 转化 全链路分析 · 数据来源：国际站导出表格（自动导入）',
+    '<b>说明：</b>成交金额单位为 <b>USD</b>（美金）；每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。');
+}
+async function yearBoardView(source, title, desc, noteHtml){
+  const d = await api('/alibaba/overview?year='+state.aliYear+'&source='+encodeURIComponent(source)+'&mode=year');
+  const t = d.total || { leads:0, deals:0, amount:0, conv:0 };
+  const yearOpts = (d.years||[2026]).map(function(y){
+    return '<option value="'+y+'"'+(String(y)===String(state.aliYear)?' selected':'')+'>'+y+' 年</option>';
+  }).join('');
+  const oRows = (d.byOwner||[]).map(function(o){
+    return '<tr><td><b>'+o.owner+'</b></td><td class="cell-mono">'+o.leads+'</td><td class="cell-mono">'+o.deals+'</td><td class="cell-mono">'+fmtUSD(o.amount)+'</td><td><b>'+o.conv+'%</b></td></tr>';
+  }).join('') || '<tr><td colspan="5" class="empty-tip">暂无数据</td></tr>';
+  const maxC = Math.max.apply(null, (d.byCountry||[]).map(function(x){return x.count;}).concat([1]));
+  const cBars = (d.byCountry||[]).map(function(x){
+    return '<div class="hbar-row"><div class="hbar-label">'+x.country+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxC*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const maxT = Math.max.apply(null, (d.byType||[]).map(function(x){return x.count;}).concat([1]));
+  const tBars = (d.byType||[]).map(function(x){
+    return '<div class="hbar-row"><div class="hbar-label">'+x.type+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxT*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const monthly = d.monthly || [];
+  const maxM = Math.max.apply(null, monthly.map(function(x){return x.leads;}).concat([1]));
+  const vCols = monthly.map(function(m){
+    const h = Math.max(4, Math.round(m.leads/maxM*120));
+    return '<div class="vcol"><div class="vnum">'+m.leads+'</div><div class="bar" style="height:'+h+'px"></div><div class="vday">'+m.month+'月</div></div>';
+  }).join('');
+  const noData = t.leads === 0;
+  return ph(title, desc,
+    '<select class="form-select" style="min-width:120px" onchange="state.aliYear=this.value;render()">'+yearOpts+'</select>') +
+  '<div class="stat-grid">' +
+    stat('users','blue','全年商机',(noData?'—':t.leads+' 个')) +
+    stat('trophy','green','全年成交',(noData?'—':t.deals+' 单')) +
+    stat('bag','gold','成交金额',(noData?'—':fmtUSD(t.amount))) +
+    stat('target','purple','转化率',(noData?'—':t.conv+'%')) +
+    stat('chart','cyan','投放花费',(t.spend>0?fmtMoney(t.spend):'—')) +
+    stat('trend','red','单客成本',(t.costPerLead>0?'¥'+t.costPerLead:'—')) +
+  '</div>' +
+  (noData ? '<div class="empty-tip">该年度暂无商机数据</div>' :
+  '<div class="grid-2">' +
+    '<div class="card">'+ct('业务经理年度排名','users')+
+      '<div class="table-wrap"><table><thead><tr><th>经理</th><th>商机数</th><th>成交</th><th>成交金额</th><th>转化率</th></tr></thead><tbody>'+oRows+'</tbody></table></div>' +
+    '</div>' +
+    '<div class="card">'+ct('月度商机趋势','trend')+'<div class="vchart">'+vCols+'</div>' +
+      '<div class="legend"><span class="lg"><span class="dot" style="background:var(--gold)"></span>各月商机数量</span></div></div>' +
+  '</div>' +
+  '<div class="grid-2 section-gap">' +
+    '<div class="card">'+ct('TOP 国家','globe')+cBars+'</div>' +
+    '<div class="card">'+ct('商机类型分布','pie')+tBars+'</div>' +
+  '</div>' +
+  '<div class="info-note">'+noteHtml+'</div>');
 }
 async function viewAdminSite(){
   return boardView('独立站','独立站看板','独立站询盘 → 跟进 → 转化 分析 · 数据来源：网站询盘表（自动导入）',
