@@ -845,7 +845,7 @@ async function boardView(source, boardTitle, boardDesc, noteHtml){
   '<div class="card section-gap">'+ct('每日商机趋势','trend')+'<div class="vchart">'+vCols+'</div>' +
     '<div class="legend"><span class="lg"><span class="dot" style="background:var(--gold)"></span>每日商机数量</span></div></div>' +
   '<div class="card section-gap">'+ct('跟进情况 TOP8','clock')+followBars+'</div>' +
-  '<div class="info-note">'+noteHtml+'</div>');
+  (noteHtml ? '<div class="info-note">'+noteHtml+'</div>' : ''));
 }
 async function viewAdminAlibaba(){
   const tabs = '<div class="lb-tabs" style="margin-bottom:16px">' +
@@ -855,7 +855,7 @@ async function viewAdminAlibaba(){
   if(state.aliMode==='year') return tabs + await yearBoardView('国际站','阿里国际站年度总览','全年商机 → 成交 → 转化 · 数据来源：国际站导出表格',
     '<b>说明：</b>年度数据由各月商机表汇总，成交金额单位为 <b>USD</b>（美金）。');
   return tabs + await boardView('国际站','阿里国际站看板','商机 → 成交 → 转化 全链路分析 · 数据来源：国际站导出表格（自动导入）',
-    '<b>说明：</b>成交金额单位为 <b>USD</b>（美金）；每月把新表格给我，替换 data/ 下的商机数据文件即可更新看板。');
+    '');
 }
 async function yearBoardView(source, title, desc, noteHtml){
   const d = await api('/alibaba/overview?year='+state.aliYear+'&source='+encodeURIComponent(source)+'&mode=year');
