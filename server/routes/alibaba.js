@@ -73,13 +73,33 @@ module.exports = function (db) {
         spend: spend,
         costPerLead: spend > 0 ? Math.round(spend / rows.length * 100) / 100 : 0
       };
+      const spendByMonth = {};
+      db.prepare('SELECT month, spend FROM ali_months WHERE year=?').all(year).forEach(r => { spendByMonth[r.month] = Number(r.spend); });
       const monthly = [];
       for (let m = 1; m <= 12; m++) {
         const mr = rows.filter(x => x.month === m);
         const md = mr.filter(x => x.classify === '成交客户');
-        monthly.push({ month: m, leads: mr.length, deals: md.length, amount: md.reduce((s, x) => s + x.amount, 0), conv: mr.length ? Math.round(md.length / mr.length * 100) : 0 });
+        const sp = spendByMonth[m] || 0;
+        monthly.push({ month: m, leads: mr.length, deals: md.length, amount: md.reduce((s, x) => s + x.amount, 0), conv: mr.length ? Math.round(md.length / mr.length * 100) : 0, spend: sp, costPerLead: sp > 0 && mr.length ? Math.round(sp / mr.length * 100) / 100 : 0 });
       }
-      return res.json({ mode: 'year', year, source, total, byOwner: ownerAgg(rows), byCountry: countryAgg(rows), byType: typeAgg(rows), monthly, years: availableYears(db, source) });
+      const stageMap = { '初步询盘': 0, '有意向': 0, '已报价': 0, '已成交': 0, '跟进中': 0 };
+      rows.forEach(x => { stageMap[funnelStage(x)]++; });
+      const funnel = Object.keys(stageMap).map(k => ({ stage: k, count: stageMap[k] }));
+      const custMap = {};
+      deals.filter(x => x.amount > 0).forEach(x => {
+        const k = x.customer;
+        if (!custMap[k]) custMap[k] = { customer: x.customer, country: x.country, owner: x.owner, date: x.date, amount: 0, deals: 0 };
+        custMap[k].amount += x.amount;
+        custMap[k].deals += 1;
+        if (x.date > custMap[k].date) custMap[k].date = x.date;
+      });
+      const topCustomers = Object.values(custMap).sort((a, b) => b.amount - a.amount).slice(0, 10);
+      const quarterly = [1, 2, 3, 4].map(q => {
+        const qr = rows.filter(x => Math.ceil(x.month / 3) === q);
+        const qd = qr.filter(x => x.classify === '成交客户');
+        return { quarter: q, leads: qr.length, deals: qd.length, amount: qd.reduce((s, x) => s + x.amount, 0), conv: qr.length ? Math.round(qd.length / qr.length * 100) : 0 };
+      });
+      return res.json({ mode: 'year', year, source, total, byOwner: ownerAgg(rows), byCountry: countryAgg(rows), byType: typeAgg(rows), monthly, funnel, topCustomers, quarterly, years: availableYears(db, source) });
     }
 
     // ---- 月度看板 ----
@@ -140,6 +160,16 @@ function typeAgg(rows) {
   const tMap = {};
   rows.forEach(x => { tMap[x.type] = (tMap[x.type] || 0) + 1; });
   return Object.keys(tMap).map(t => ({ type: t, count: tMap[t] }));
+}
+// 跟进阶段归类（转化漏斗）
+function funnelStage(x) {
+  const f = x.follow || '';
+  const c = x.classify || '';
+  if (c === '成交客户' || /下单/.test(f)) return '已成交';
+  if (/报价|价格|谈/.test(f)) return '已报价';
+  if (/有意向|确认中|匹配|感兴趣|试样|样品|色卡|打样|要.*的|需要/.test(f)) return '有意向';
+  if (/询|咨询|索取|了解|初步/.test(f)) return '初步询盘';
+  return '跟进中';
 }
 function availableYears(db, source) {
   const sourceQ = source || '国际站';

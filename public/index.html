@@ -910,6 +910,24 @@ async function yearBoardView(source, title, desc, noteHtml){
     const h = Math.max(4, Math.round(m.leads/maxM*120));
     return '<div class="vcol"><div class="vnum">'+m.leads+'</div><div class="bar" style="height:'+h+'px"></div><div class="vday">'+m.month+'月</div></div>';
   }).join('');
+  const mRows = monthly.map(function(m){
+    return '<tr><td class="cell-mono"><b>'+m.month+' 月</b></td><td class="cell-mono">'+m.leads+'</td><td class="cell-mono">'+m.deals+'</td><td class="cell-mono">'+fmtUSD(m.amount)+'</td><td><b>'+m.conv+'%</b></td><td class="cell-mono">'+fmtMoney(m.spend)+'</td><td class="cell-mono">'+(m.costPerLead>0?'¥'+m.costPerLead:'—')+'</td></tr>';
+  }).join('') || '<tr><td colspan="7" class="empty-tip">暂无数据</td></tr>';
+  const maxSpend = Math.max.apply(null, monthly.map(function(x){return x.spend;}).concat([1]));
+  const spendCols = monthly.map(function(m){
+    const h = Math.max(4, Math.round(m.spend/maxSpend*120));
+    return '<div class="vcol"><div class="vnum">'+(m.spend>0?Math.round(m.spend):'')+'</div><div class="bar" style="height:'+h+'px;background:linear-gradient(180deg,var(--cyan),var(--cyan-2))"></div><div class="vday">'+m.month+'月</div></div>';
+  }).join('');
+  const maxFn = Math.max.apply(null, (d.funnel||[]).map(function(x){return x.count;}).concat([1]));
+  const funnelBars = (d.funnel||[]).map(function(x){
+    return '<div class="hbar-row"><div class="hbar-label">'+x.stage+'</div><div class="hbar-track"><div class="hbar-fill" style="width:'+Math.round(x.count/maxFn*100)+'%"></div></div><div class="hbar-val">'+x.count+'</div></div>';
+  }).join('') || '<div class="empty-tip">暂无数据</div>';
+  const topRows = (d.topCustomers||[]).map(function(x){
+    return '<tr><td><b>'+x.customer+'</b><div style="font-size:12px;color:var(--ink-3)">'+x.country+(x.deals>1?' · '+x.deals+' 单':'')+'</div></td><td class="cell-mono">'+fmtUSD(x.amount)+'</td><td>'+x.owner+'</td><td class="cell-mono">'+x.date+'</td></tr>';
+  }).join('') || '<tr><td colspan="4" class="empty-tip">暂无成交</td></tr>';
+  const quarterHtml = (d.quarterly||[]).map(function(q){
+    return '<div class="mini-stat"><span>Q'+q.quarter+' 商机 / 成交</span><b>'+q.leads+' / '+q.deals+'</b><span style="font-size:11px;color:var(--ink-3)">金额 '+fmtUSD(q.amount)+' · 转化 '+q.conv+'%</span></div>';
+  }).join('');
   const noData = t.leads === 0;
   return ph(title, desc,
     '<select class="form-select" style="min-width:120px" onchange="state.aliYear=this.value;render()">'+yearOpts+'</select>') +
@@ -922,12 +940,27 @@ async function yearBoardView(source, title, desc, noteHtml){
     stat('trend','red','单客成本',(t.costPerLead>0?'¥'+t.costPerLead:'—')) +
   '</div>' +
   (noData ? '<div class="empty-tip">该年度暂无商机数据</div>' :
+  '<div class="card">'+ct('月度经营明细','cal')+
+    '<div class="table-wrap"><table><thead><tr><th>月份</th><th>商机</th><th>成交</th><th>成交金额</th><th>转化率</th><th>花费</th><th>单客成本</th></tr></thead><tbody>'+mRows+'</tbody></table></div>' +
+  '</div>' +
   '<div class="grid-2">' +
     '<div class="card">'+ct('业务经理年度排名','users')+
       '<div class="table-wrap"><table><thead><tr><th>经理</th><th>商机数</th><th>成交</th><th>成交金额</th><th>转化率</th></tr></thead><tbody>'+oRows+'</tbody></table></div>' +
     '</div>' +
     '<div class="card">'+ct('月度商机趋势','trend')+'<div class="vchart">'+vCols+'</div>' +
       '<div class="legend"><span class="lg"><span class="dot" style="background:var(--gold)"></span>各月商机数量</span></div></div>' +
+  '</div>' +
+  '<div class="grid-2 section-gap">' +
+    '<div class="card">'+ct('月度花费趋势','chart')+'<div class="vchart">'+spendCols+'</div>' +
+      '<div class="legend"><span class="lg"><span class="dot" style="background:var(--cyan)"></span>各月投放花费（¥）</span></div></div>' +
+    '<div class="card">'+ct('全年转化漏斗','target')+funnelBars+
+      '<div class="footer-note" style="margin-top:10px">按跟进情况归类：初步询盘 → 有意向 → 已报价 → 已成交</div></div>' +
+  '</div>' +
+  '<div class="grid-2 section-gap">' +
+    '<div class="card">'+ct('季度汇总','pie')+'<div class="grid-2">'+quarterHtml+'</div></div>' +
+    '<div class="card">'+ct('成交 TOP 客户','trophy')+
+      '<div class="table-wrap"><table><thead><tr><th>客户</th><th>成交金额</th><th>经理</th><th>日期</th></tr></thead><tbody>'+topRows+'</tbody></table></div>' +
+    '</div>' +
   '</div>' +
   '<div class="grid-2 section-gap">' +
     '<div class="card">'+ct('TOP 国家','globe')+cBars+'</div>' +
