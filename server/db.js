@@ -102,6 +102,18 @@ function init() {
       amount INTEGER DEFAULT 0,
       source TEXT DEFAULT '国际站'
     );
+    CREATE TABLE IF NOT EXISTS products (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      category TEXT DEFAULT '',
+      series TEXT DEFAULT '',
+      model TEXT NOT NULL,
+      feature TEXT DEFAULT '',
+      specs TEXT DEFAULT '{}',
+      thickness TEXT DEFAULT '',
+      warranty TEXT DEFAULT '',
+      size TEXT DEFAULT '',
+      enabled INTEGER DEFAULT 1
+    );
   `);
 
   // 兼容旧库：为已存在的 opportunities 表补充 source 列

@@ -8,6 +8,7 @@ const pointRoutes = require('./routes/points');
 const mallRoutes = require('./routes/mall');
 const userRoutes = require('./routes/users');
 const alibabaRoutes = require('./routes/alibaba');
+const productRoutes = require('./routes/products');
 
 const PORT = process.env.PORT || 3000;
 const db = init();
@@ -45,6 +46,19 @@ const db = init();
   console.log(`[import] 已导入月度花费 ${rows.length} 条`);
 })();
 
+// 产品库导入：data/products.json → products 表（空表导入一次）
+(function importProducts() {
+  const fs = require('fs');
+  const f = path.join(__dirname, '..', 'data', 'products.json');
+  if (!fs.existsSync(f)) return;
+  const count = db.prepare('SELECT COUNT(*) c FROM products').get().c;
+  if (count > 0) return;
+  const rows = JSON.parse(fs.readFileSync(f, 'utf8'));
+  const ins = db.prepare('INSERT INTO products (category,series,model,feature,specs,thickness,warranty,size) VALUES (?,?,?,?,?,?,?,?)');
+  rows.forEach(p => ins.run(p.category || '', p.series || '', p.model || '', p.feature || '', JSON.stringify(p.specs || {}), p.thickness || '', p.warranty || '', p.size || ''));
+  console.log(`[import] 已导入产品 ${rows.length} 个`);
+})();
+
 // 首次启动若没有任何业务员账号，自动创建演示账号（生产可删）
 if (db.prepare("SELECT COUNT(*) c FROM users WHERE role='sales'").get().c === 0) {
   const demo = [
@@ -72,6 +86,7 @@ app.use('/api', pointRoutes(db));
 app.use('/api/mall', mallRoutes(db));
 app.use('/api/users', userRoutes(db));
 app.use('/api/alibaba', alibabaRoutes(db));
+app.use('/api/products', productRoutes(db));
 
 // 前端路由兜底（SPA 无此需求，纯静态单页）
 app.use((err, req, res, next) => {

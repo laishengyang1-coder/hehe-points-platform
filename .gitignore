@@ -3,5 +3,6 @@ data/*
 !data/opportunities-*.json
 !data/site-opportunities-*.json
 !data/ali-months.json
+!data/products.json
 *.log
 .DS_Store
