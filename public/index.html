@@ -1076,9 +1076,9 @@ function buildQuote(){
     const pr = Number(document.getElementById('q-price-'+p.id).value);
     if(!pr) noPrice = true;
     const sub = q * pr; total += sub;
-    const sp = p.specs || {};
-    const specStr = Object.keys(sp).filter(function(k){ return sp[k]; }).map(function(k){ return k+' '+sp[k]; }).join(' / ');
-    rows.push({ model:p.model, series:p.series, spec:specStr, size:p.size, warranty:p.warranty, qty:q, price:pr, sub:sub });
+    const type = p.category==='车衣' ? 'Paint Protection Film' : 'Window Film';
+    const warranty = (p.warranty||'').replace(/(\d+)\s*年/g, '$1 Years');
+    rows.push({ model:p.model, type:type, size:p.size, warranty:warranty || '—', qty:q, price:pr, sub:sub });
   });
   if(noPrice){ toast('有产品未填写单价，请补全后再生成'); return; }
   const today = new Date();
@@ -1088,7 +1088,7 @@ function buildQuote(){
   const es = exp.getFullYear()+'-'+String(exp.getMonth()+1).padStart(2,'0')+'-'+String(exp.getDate()).padStart(2,'0');
   const esc = function(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
   const rowsHtml = rows.map(function(r,i){
-    return '<tr><td>'+(i+1)+'</td><td><b>'+esc(r.model)+'</b><div class="sub">'+esc(r.series)+'</div></td><td class="sub">'+esc(r.spec)+'</td><td>'+esc(r.size)+'</td><td>'+esc(r.warranty)+'</td><td class="num">'+r.qty+'</td><td class="num">'+r.price.toFixed(2)+'</td><td class="num">'+r.sub.toFixed(2)+'</td></tr>';
+    return '<tr><td>'+(i+1)+'</td><td><b>'+esc(r.model)+'</b></td><td>'+esc(r.type)+'</td><td>'+esc(r.size)+'</td><td>'+esc(r.warranty)+'</td><td class="num">'+r.qty+'</td><td class="num">'+r.price.toFixed(2)+'</td><td class="num">'+r.sub.toFixed(2)+'</td></tr>';
   }).join('');
   const w = window.open('', '_blank');
   if(!w){ toast('浏览器拦截了新窗口，请允许弹窗后重试'); return; }
@@ -1110,16 +1110,16 @@ function buildQuote(){
     '@media print{body{margin:12mm}}' +
     '</style></head><body>' +
     '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
-      '<div><h1>安徽和和新材料有限公司</h1><div class="en">Anhui Hehe New Materials Co., Ltd.</div></div>' +
-      '<div style="text-align:right"><div style="font-size:17px;font-weight:800;letter-spacing:2px;color:#C9A24B">QUOTATION</div><div class="en">产品报价单</div><div class="en">'+no+'</div></div>' +
+      '<div><h1>Anhui Hehe New Materials Co., Ltd.</h1><div class="en">Professional Window Film & Paint Protection Film Manufacturer</div></div>' +
+      '<div style="text-align:right"><div style="font-size:17px;font-weight:800;letter-spacing:2px;color:#C9A24B">QUOTATION</div><div class="en">'+no+'</div></div>' +
     '</div>' +
-    '<div class="meta"><div><b>客户 To：</b>'+esc(cust)+'</div><div style="text-align:right"><b>报价人 By：</b>'+esc(u.name)+(u.region?'（'+esc(u.region)+'）':'')+' · 安徽和和<br><b>日期 Date：</b>'+ds+'　<b>有效期 Valid：</b>'+es+'（'+valid+' 天）</div></div>' +
-    '<div class="sect">产品明细 Products</div>' +
-    '<table><thead><tr><th>#</th><th>型号 Model</th><th>性能参数 Specifications</th><th>规格 Size</th><th>质保 Warranty</th><th>数量 Qty</th><th style="text-align:right">单价 USD</th><th style="text-align:right">小计 USD</th></tr></thead><tbody>'+rowsHtml+'</tbody></table>' +
-    '<div class="total">合计 Total：USD '+total.toFixed(2)+'</div>' +
-    (note?'<div class="note"><b>备注 Remarks：</b>'+esc(note)+'</div>':'') +
-    '<div class="sign"><div>客户确认（签字 / 盖章）：<br><br>______________________</div><div style="text-align:right">报价人：'+esc(u.name)+(u.region?'（'+esc(u.region)+'）':'')+'<br>安徽和和新材料有限公司<br>'+ds+'</div></div>' +
-    '<div class="foot">安徽和和新材料有限公司 · Anhui Hehe New Materials Co., Ltd. · www.hhppf.com · sales@hhppf.com</div>' +
+    '<div class="meta"><div><b>To:</b> '+esc(cust)+'</div><div style="text-align:right"><b>From:</b> '+esc(u.name)+' · Anhui Hehe<br><b>Date:</b> '+ds+'　<b>Valid Until:</b> '+es+' ('+valid+' days)</div></div>' +
+    '<div class="sect">Product Details</div>' +
+    '<table><thead><tr><th>#</th><th>Model</th><th>Type</th><th>Size</th><th>Warranty</th><th style="text-align:right">Qty</th><th style="text-align:right">Unit Price (USD)</th><th style="text-align:right">Amount (USD)</th></tr></thead><tbody>'+rowsHtml+'</tbody></table>' +
+    '<div class="total">Total: USD '+total.toFixed(2)+'</div>' +
+    (note?'<div class="note"><b>Remarks:</b> '+esc(note)+'</div>':'') +
+    '<div class="sign"><div>Customer Confirmation (Signature / Stamp):<br><br>______________________</div><div style="text-align:right">Sales: '+esc(u.name)+'<br>Anhui Hehe New Materials Co., Ltd.<br>'+ds+'</div></div>' +
+    '<div class="foot">Anhui Hehe New Materials Co., Ltd. · www.hhppf.com · sales@hhppf.com</div>' +
     '<script>window.onload=function(){setTimeout(function(){window.print();},300);};<\/script>' +
     '</body></html>');
   w.document.close();
