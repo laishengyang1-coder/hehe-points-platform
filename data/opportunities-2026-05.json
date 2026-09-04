@@ -242,6 +242,17 @@
   "amount": 0
  },
  {
+  "date": "2026-05-05",
+  "type": "TM商机",
+  "customer": "Daniel Knizner",
+  "country": "美国",
+  "level": "L1",
+  "owner": "Kat",
+  "follow": "订单已确认/履约中",
+  "classify": "成交客户",
+  "amount": 660.0
+ },
+ {
   "date": "2026-05-06",
   "type": "询盘商机",
   "customer": "Miller Anari",
@@ -273,6 +284,17 @@
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
+ },
+ {
+  "date": "2026-05-06",
+  "type": "TM商机",
+  "customer": "Julian Bonilla",
+  "country": "哥伦比亚",
+  "level": "L3",
+  "owner": "Claire",
+  "follow": "订单已确认/履约中",
+  "classify": "成交客户",
+  "amount": 1429.0
  },
  {
   "date": "2026-05-07",
@@ -460,6 +482,17 @@
   "follow": "等待客户回复",
   "classify": "",
   "amount": 0
+ },
+ {
+  "date": "2026-05-11",
+  "type": "TM商机",
+  "customer": "off shop",
+  "country": "澳大利亚",
+  "level": "L1",
+  "owner": "Leo",
+  "follow": "订单已确认/履约中",
+  "classify": "成交客户",
+  "amount": 382.0
  },
  {
   "date": "2026-05-12",
@@ -1164,6 +1197,17 @@
   "follow": "持续沟通中",
   "classify": "意向客户",
   "amount": 0
+ },
+ {
+  "date": "2026-05-25",
+  "type": "TM商机",
+  "customer": "Mohamed saber",
+  "country": "沙特阿拉伯",
+  "level": "L3",
+  "owner": "Allen",
+  "follow": "订单已确认/履约中",
+  "classify": "成交客户",
+  "amount": 10940.0
  },
  {
   "date": "2026-05-26",
