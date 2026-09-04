@@ -149,7 +149,7 @@ function ownerAgg(rows) {
     const list = ownerMap[o];
     const d = list.filter(x => x.classify === '成交客户');
     return { owner: o, leads: list.length, deals: d.length, amount: d.reduce((s, x) => s + x.amount, 0), conv: Math.round(d.length / list.length * 100) };
-  }).sort((a, b) => b.leads - a.leads);
+  }).sort((a, b) => (b.conv - a.conv) || (b.leads - a.leads));
 }
 function countryAgg(rows) {
   const cMap = {};
